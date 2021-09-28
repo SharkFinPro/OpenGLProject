@@ -3,9 +3,11 @@ project(OpenGLProject)
 
 set(CMAKE_CXX_STANDARD 17)
 
+#set output directory as project directory - allows file reading from project directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
-#create executable - Include glad.c to compile
+#create executable & set source files
+set(Sources source/main.cpp)
 add_executable(${PROJECT_NAME} source/main.cpp external/glad/src/glad.c)
 
 #include GLFW
