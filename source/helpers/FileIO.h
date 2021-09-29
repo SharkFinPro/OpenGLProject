@@ -5,7 +5,7 @@
 
 namespace helpers
 {
-    bool fileToString(const char* fileName, std::string& output);
+    void fileToString(const char* fileName, std::string& output);
 }
 
 #endif //OPENGLPROJECT_FILEIO_H
