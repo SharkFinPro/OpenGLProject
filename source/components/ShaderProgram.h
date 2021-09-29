@@ -7,12 +7,13 @@ private:
 
 public:
     ShaderProgram(const char* vertex, const char* fragment);
+    ~ShaderProgram();
 
-    void use();
+    void use() const;
 
-    void setUniform(const char* name, int value);
-    void setUniform(const char* name, bool value);
-    void setUniform(const char* name, float value);
+    void setUniform(const char* name, int value) const;
+    void setUniform(const char* name, bool value) const;
+    void setUniform(const char* name, float value) const;
 };
 
 #endif //OPENGLPROJECT_SHADERPROGRAM_H

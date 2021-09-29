@@ -18,7 +18,8 @@ int main()
     }
 
     /* Create Window */
-    Window* window = new Window(800, 600, "Learn OpenGL");
+    auto window = new Window(800, 600, "Learn OpenGL");
+    window->makeCurrentContext();
 
     /* Load GLAD */
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -27,12 +28,12 @@ int main()
     }
 
     /* Load Shaders */
-    ShaderProgram* shaderProgram = new ShaderProgram("source/shaders/vertex.vert", "source/shaders/fragment.frag");
+    auto shaderProgram = new ShaderProgram("source/shaders/vertex.vert", "source/shaders/fragment.frag");
 
     /* Create Graphics */
     float vertices[] = {
-        0.5f,  0.5f, 0.0f,  // top right
-        0.5f, -0.5f, 0.0f,  // bottom right
+         0.5f,  0.5f, 0.0f,  // top right
+         0.5f, -0.5f, 0.0f,  // bottom right
         -0.5f, -0.5f, 0.0f,  // bottom left
         -0.5f,  0.5f, 0.0f   // top left
     };
@@ -80,7 +81,7 @@ int main()
 void render(Window* window, ShaderProgram* shaderProgram, unsigned int& VAO)
 {
     // Input
-    window->processInput()
+    window->processInput();
 
     // Rendering
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);

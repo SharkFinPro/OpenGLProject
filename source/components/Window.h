@@ -12,14 +12,12 @@ private:
 
 public:
     Window(int width, int height, const char* name);
+    ~Window();
 
-    bool shouldClose();
-
+    [[nodiscard]] bool shouldClose() const;
     void update();
-
     void processInput();
-
-    Window();
+    void makeCurrentContext();
 };
 
 

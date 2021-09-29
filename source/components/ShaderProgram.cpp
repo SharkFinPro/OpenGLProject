@@ -60,22 +60,27 @@ ShaderProgram::ShaderProgram(const char* vertex, const char* fragment)
     glDeleteShader(fragmentShader);
 }
 
-void ShaderProgram::use()
+ShaderProgram::~ShaderProgram()
+{
+    glDeleteProgram(programID);
+}
+
+void ShaderProgram::use() const
 {
     glUseProgram(programID);
 }
 
-void ShaderProgram::setUniform(const char* name, int value)
+void ShaderProgram::setUniform(const char* name, int value) const
 {
     glUniform1i(glGetUniformLocation(programID, name), value);
 }
 
-void ShaderProgram::setUniform(const char* name, bool value)
+void ShaderProgram::setUniform(const char* name, bool value) const
 {
     glUniform1i(glGetUniformLocation(programID, name), value);
 }
 
-void ShaderProgram::setUniform(const char* name, float value)
+void ShaderProgram::setUniform(const char* name, float value) const
 {
     glUniform1f(glGetUniformLocation(programID, name), value);
 }

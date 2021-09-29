@@ -16,20 +16,23 @@ Window::Window(int windowWidth, int windowHeight, const char *name) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(width, height, "Learn OpenGL", nullptr, nullptr);
+    window = glfwCreateWindow(width, height, name, nullptr, nullptr);
 
     if (window == nullptr)
     {
-
         glfwTerminate();
         throw std::runtime_error("Failed to create GLFW window");
     }
 
-    glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 }
 
-bool Window::shouldClose()
+Window::~Window()
+{
+    glfwDestroyWindow(window);
+}
+
+bool Window::shouldClose() const
 {
     return glfwWindowShouldClose(window);
 }
@@ -47,4 +50,9 @@ void Window::processInput()
     {
         glfwSetWindowShouldClose(window, true);
     }
+}
+
+void Window::makeCurrentContext()
+{
+    glfwMakeContextCurrent(window);
 }
