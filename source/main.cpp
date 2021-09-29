@@ -1,62 +1,50 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <sstream>
+#include <stdexcept>
+#include <cmath>
+
+#include "components/ShaderProgram.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 
-bool fileToString(const char* fileName, std::string& output);
+void createWindow(GLFWwindow*& window);
 
-bool createWindow(GLFWwindow*& window);
-bool loadShaders(unsigned int& shaderProgram);
-
-void render(GLFWwindow* window, unsigned int& shaderProgram, unsigned int& VAO);
+void render(GLFWwindow* window, ShaderProgram* shaderProgram, unsigned int& VAO);
 
 int main()
 {
     /* Initialize GLFW */
     if (!glfwInit())
     {
-        std::cout << "Failed to initialize GLFW" << std::endl;
-        return -1;
+        throw std::runtime_error("Failed to initialize GLFW");
     }
 
     /* Create Window */
     GLFWwindow* window;
-    if (!createWindow(window))
-    {
-        return -1;
-    }
+    createWindow(window);
 
     /* Load GLAD */
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return -1;
+        throw std::runtime_error("Failed to initialize GLAD");
     }
 
     /* Load Shaders */
-    unsigned int shaderProgram;
-    if (!loadShaders(shaderProgram))
-    {
-        return -1;
-    }
+    ShaderProgram* shaderProgram = new ShaderProgram("source/shaders/vertex.vert", "source/shaders/fragment.frag");
 
     /* Create Graphics */
     float vertices[] = {
-            0.5f,  0.5f, 0.0f,  // top right
-            0.5f, -0.5f, 0.0f,  // bottom right
-            -0.5f, -0.5f, 0.0f,  // bottom left
-            -0.5f,  0.5f, 0.0f   // top left
+        0.5f,  0.5f, 0.0f,  // top right
+        0.5f, -0.5f, 0.0f,  // bottom right
+        -0.5f, -0.5f, 0.0f,  // bottom left
+        -0.5f,  0.5f, 0.0f   // top left
     };
 
     unsigned int indices[] = {
-            0, 1, 3, // first triangle
-            1, 2, 3  // second triangle
+        0, 1, 3, // first triangle
+        1, 2, 3  // second triangle
     };
 
     // Create VAO & VBO & EBO
@@ -106,23 +94,7 @@ void processInput(GLFWwindow* window)
     }
 }
 
-bool fileToString(const char* fileName, std::string& output)
-{
-    std::ifstream file(fileName);
-
-    std::stringstream outputStream;
-    std::string line;
-
-    while (std::getline(file, line)) {
-        outputStream << line << "\n";
-    }
-
-    output = outputStream.str();
-
-    return true;
-}
-
-bool createWindow(GLFWwindow*& window)
+void createWindow(GLFWwindow*& window)
 {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -132,82 +104,16 @@ bool createWindow(GLFWwindow*& window)
 
     if (window == nullptr)
     {
-        std::cout << "Failed to create GLFW window" << std::endl;
+
         glfwTerminate();
-        return false;
+        throw std::runtime_error("Failed to create GLFW window");
     }
 
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-    return true;
 }
 
-bool loadShaders(unsigned int& shaderProgram)
-{
-    // Load shader data from files
-    std::string vertexShaderSourceString;
-    fileToString(R"(source/shaders/vertex.vert)", vertexShaderSourceString);
-    const char* vertexShaderSource = vertexShaderSourceString.c_str();
-
-    std::string fragmentShaderSourceString;
-    fileToString(R"(source/shaders/fragment.frag)", fragmentShaderSourceString);
-    const char* fragmentShaderSource = fragmentShaderSourceString.c_str();
-
-    // Load Vertex Shader
-    unsigned int vertexShader;
-    vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
-    glCompileShader(vertexShader);
-
-    int success;
-    char infoLog[512];
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-        return false;
-    }
-
-    // Load Fragment Shader
-    unsigned int fragmentShader;
-    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
-    glCompileShader(fragmentShader);
-
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
-        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-        return false;
-    }
-
-    // Create Shader Program
-    shaderProgram = glCreateProgram();
-
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if (!success)
-    {
-        glGetProgramInfoLog(shaderProgram, 512, nullptr, infoLog);
-        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-        return false;
-    }
-
-    glUseProgram(shaderProgram);
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-
-    return true;
-}
-
-void render(GLFWwindow* window, unsigned int& shaderProgram, unsigned int& VAO)
+void render(GLFWwindow* window, ShaderProgram* shaderProgram, unsigned int& VAO)
 {
     // Input
     processInput(window);
@@ -216,8 +122,14 @@ void render(GLFWwindow* window, unsigned int& shaderProgram, unsigned int& VAO)
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
+    // Use shader
+    shaderProgram->use();
+
+    // Update uniforms
+    float greenValue = (std::sin(static_cast<float>(glfwGetTime())) / 2.0f) + 0.5f;
+    shaderProgram->setUniform("greenColor", greenValue);
+
     // Draw Object
-    glUseProgram(shaderProgram);
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 

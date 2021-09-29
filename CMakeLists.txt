@@ -6,9 +6,8 @@ set(CMAKE_CXX_STANDARD 17)
 #set output directory as project directory - allows file reading from project directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
-#create executable & set source files
-set(Sources source/main.cpp)
-add_executable(${PROJECT_NAME} source/main.cpp external/glad/src/glad.c)
+#create executable
+add_executable(${PROJECT_NAME} source/main.cpp external/glad/src/glad.c source/components/ShaderProgram.cpp source/components/ShaderProgram.h source/helpers/FileIO.h source/helpers/FileIO.cpp)
 
 #include GLFW
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
