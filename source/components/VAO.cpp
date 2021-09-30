@@ -2,31 +2,18 @@
 
 #include <glad/glad.h>
 
-VAO::VAO(float vertices[], int verticesSize, unsigned int indices[], int indicesSize)
+VAO::VAO(float vertices[], int verticesSize, unsigned int indices[], int indicesSize, unsigned int triangles)
 {
+    this->triangles = triangles;
     glGenVertexArrays(1, &vaoID);
     glGenBuffers(1, &vboID);
     glGenBuffers(1, &eboID);
 
     bind();
+    bindBuffers();
 
-    glBindBuffer(GL_ARRAY_BUFFER, vboID);
     glBufferData(GL_ARRAY_BUFFER, verticesSize, vertices, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSize, indices, GL_STATIC_DRAW);
-
-    // Position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)nullptr);
-    glEnableVertexAttribArray(0);
-
-    // Color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    // Texture coordinate attribute
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
 
     unbind();
 }
@@ -46,4 +33,24 @@ void VAO::bind() const
 void VAO::unbind()
 {
     glBindVertexArray(0);
+}
+
+void VAO::bindBuffers() const
+{
+    glBindBuffer(GL_ARRAY_BUFFER, vboID);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
+}
+
+void VAO::addAttribute(int index, int size, int stride, int distance)
+{
+    bind();
+    bindBuffers();
+    glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)(distance * sizeof(float)));
+    glEnableVertexAttribArray(index);
+}
+
+void VAO::draw() const
+{
+    bind();
+    glDrawElements(GL_TRIANGLES, triangles, GL_UNSIGNED_INT, nullptr);
 }

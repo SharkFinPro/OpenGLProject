@@ -45,7 +45,10 @@ int main()
         1, 2, 3  // second triangle
     };
 
-    auto vao = new VAO(vertices, sizeof(vertices), indices, sizeof(indices));
+    auto vao = new VAO(vertices, sizeof(vertices), indices, sizeof(indices), 6);
+    vao->addAttribute(0, 3, 8, 0); // Position
+    vao->addAttribute(1, 3, 8, 3); // Color
+    vao->addAttribute(2, 2, 8, 6); // Texture
 
     /* Load & Create Texture */
     auto texture1 = new Texture("source/images/awesomeface", "png");
@@ -56,9 +59,7 @@ int main()
     shaderProgram->setUniform("texture2", 1);
 
     glm::mat4 trans = glm::mat4(1.0f);
-    trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
-    trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
-
+    trans = glm::scale(trans, glm::vec3(1.5));
     shaderProgram->setUniform("transform", trans);
 
     /* Main loop */
@@ -78,8 +79,7 @@ int main()
         texture1->bind(GL_TEXTURE0);
 
         // Draw Object
-        vao->bind();
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+        vao->draw();
 
         // Check & call events & swap the buffers
         window->update();
