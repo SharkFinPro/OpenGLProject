@@ -6,6 +6,7 @@
 #include "components/Window.h"
 #include "components/ShaderProgram.h"
 #include "components/Texture.h"
+#include "components/VAO.h"
 
 int main()
 {
@@ -42,35 +43,7 @@ int main()
         1, 2, 3  // second triangle
     };
 
-    // Create VAO & VBO & EBO
-    unsigned int VAO, VBO, EBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    // Position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)nullptr);
-    glEnableVertexAttribArray(0);
-
-    // Color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    // Texture coordinate attribute
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    glBindVertexArray(0);
+    auto vao = new VAO(vertices, sizeof(vertices), indices, sizeof(indices));
 
     /* Load & Create Texture */
     auto texture1 = new Texture("source/images/wall.jpg", "jpg");
@@ -99,7 +72,8 @@ int main()
         texture2->bind(GL_TEXTURE1);
 
         // Draw Object
-        glBindVertexArray(VAO);
+        //glBindVertexArray(VAO);
+        vao->bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
         // Check & call events & swap the buffers
@@ -109,6 +83,7 @@ int main()
     /* Cleanup & Exit */
     delete texture1;
     delete texture2;
+    delete vao;
     delete shaderProgram;
     delete window;
     glfwTerminate();

@@ -50,8 +50,3 @@ void Texture::bind(GLenum layer) const
     glActiveTexture(layer);
     glBindTexture(GL_TEXTURE_2D, textureID);
 }
-
-unsigned int Texture::getID() const
-{
-    return textureID;
-}

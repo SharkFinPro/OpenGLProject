@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 #create executable
-add_executable(${PROJECT_NAME} source/main.cpp external/glad/src/glad.c source/components/ShaderProgram.cpp source/components/ShaderProgram.h source/helpers/FileIO.h source/helpers/FileIO.cpp source/components/Window.cpp source/components/Window.h source/components/Texture.cpp source/components/Texture.h)
+add_executable(${PROJECT_NAME} source/main.cpp external/glad/src/glad.c source/components/ShaderProgram.cpp source/components/ShaderProgram.h source/helpers/FileIO.h source/helpers/FileIO.cpp source/components/Window.cpp source/components/Window.h source/components/Texture.cpp source/components/Texture.h source/components/VAO.cpp source/components/VAO.h)
 
 #include GLFW
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
