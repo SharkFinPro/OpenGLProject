@@ -8,10 +8,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-Window::Window(int windowWidth, int windowHeight, const char *name) {
-    width = windowWidth;
-    height = windowHeight;
-
+Window::Window(int width, int height, const char *name) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -55,4 +52,23 @@ void Window::processInput()
 void Window::makeCurrentContext()
 {
     glfwMakeContextCurrent(window);
+}
+
+int Window::getWidth() const
+{
+    int width;
+    glfwGetWindowSize(window, &width, nullptr);
+    return width;
+}
+
+int Window::getHeight() const
+{
+    int height;
+    glfwGetWindowSize(window, nullptr, &height);
+    return height;
+}
+
+bool Window::keyDown(int key) const
+{
+    return glfwGetKey(window, key) == GLFW_PRESS;
 }

@@ -7,8 +7,6 @@
 class Window {
 private:
     GLFWwindow* window;
-    int width;
-    int height;
 
 public:
     Window(int width, int height, const char* name);
@@ -18,6 +16,11 @@ public:
     void update();
     void processInput();
     void makeCurrentContext();
+
+    [[nodiscard]] int getWidth() const;
+    [[nodiscard]] int getHeight() const;
+
+    [[nodiscard]] bool keyDown(int key) const;
 };
 
 

@@ -51,16 +51,27 @@ int main()
     vao->addAttribute(2, 2, 8, 6); // Texture
 
     /* Load & Create Texture */
-    auto texture1 = new Texture("source/images/awesomeface", "png");
+    auto texture1 = new Texture("source/images/wall", "jpg");
+    auto texture2 = new Texture("source/images/awesomeface", "png");
 
     /* Set Uniforms */
     shaderProgram->use();
     shaderProgram->setUniform("texture1", 0);
     shaderProgram->setUniform("texture2", 1);
 
-    glm::mat4 trans = glm::mat4(1.0f);
-    trans = glm::scale(trans, glm::vec3(1.5));
-    shaderProgram->setUniform("transform", trans);
+    /* Coordinate Systems */
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::scale(model, glm::vec3(2.0f));
+    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    shaderProgram->setUniform("model", model);
+
+    glm::mat4 view = glm::mat4(1.0f);
+    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+    shaderProgram->setUniform("view", view);
+
+    glm::mat4 projection;
+    projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
+    shaderProgram->setUniform("projection", projection);
 
     /* Main loop */
     while (!window->shouldClose())
@@ -75,8 +86,13 @@ int main()
         // Use shader
         shaderProgram->use();
 
+        // Update uniforms
+        projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
+        shaderProgram->setUniform("projection", projection);
+
         // Bind texture
         texture1->bind(GL_TEXTURE0);
+        texture2->bind(GL_TEXTURE1);
 
         // Draw Object
         vao->draw();
@@ -87,6 +103,7 @@ int main()
 
     /* Cleanup & Exit */
     delete texture1;
+    delete texture2;
     delete vao;
     delete shaderProgram;
     delete window;
