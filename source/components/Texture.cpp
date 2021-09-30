@@ -18,7 +18,7 @@ Texture::Texture(const char* fileName, const char* fileType)
 
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true);
-    unsigned char* data = stbi_load(fileName, &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load(std::string(std::string(fileName) + "." + fileType).c_str(), &width, &height, &nrChannels, 0);
 
     if (data)
     {

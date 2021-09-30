@@ -70,17 +70,22 @@ void ShaderProgram::use() const
     glUseProgram(programID);
 }
 
-void ShaderProgram::setUniform(const char* name, int value) const
+void ShaderProgram::setUniform(const char* name, const int& value) const
 {
     glUniform1i(glGetUniformLocation(programID, name), value);
 }
 
-void ShaderProgram::setUniform(const char* name, bool value) const
+void ShaderProgram::setUniform(const char* name, const bool& value) const
 {
     glUniform1i(glGetUniformLocation(programID, name), value);
 }
 
-void ShaderProgram::setUniform(const char* name, float value) const
+void ShaderProgram::setUniform(const char* name, const float& value) const
 {
     glUniform1f(glGetUniformLocation(programID, name), value);
+}
+
+void ShaderProgram::setUniform(const char* name, const glm::mat4& value) const
+{
+    glUniformMatrix4fv(glGetUniformLocation(programID, name), 1, GL_FALSE, glm::value_ptr(value));
 }

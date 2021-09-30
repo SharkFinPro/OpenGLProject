@@ -1,6 +1,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include <glm/gtc/matrix_transform.hpp>
+
 #include <stdexcept>
 
 #include "components/Window.h"
@@ -46,13 +48,18 @@ int main()
     auto vao = new VAO(vertices, sizeof(vertices), indices, sizeof(indices));
 
     /* Load & Create Texture */
-    auto texture1 = new Texture("source/images/wall.jpg", "jpg");
-    auto texture2 = new Texture("source/images/awesomeface.png", "png");
+    auto texture1 = new Texture("source/images/awesomeface", "png");
 
     /* Set Uniforms */
     shaderProgram->use();
     shaderProgram->setUniform("texture1", 0);
     shaderProgram->setUniform("texture2", 1);
+
+    glm::mat4 trans = glm::mat4(1.0f);
+    trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
+    trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
+
+    shaderProgram->setUniform("transform", trans);
 
     /* Main loop */
     while (!window->shouldClose())
@@ -69,10 +76,8 @@ int main()
 
         // Bind texture
         texture1->bind(GL_TEXTURE0);
-        texture2->bind(GL_TEXTURE1);
 
         // Draw Object
-        //glBindVertexArray(VAO);
         vao->bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
@@ -82,7 +87,6 @@ int main()
 
     /* Cleanup & Exit */
     delete texture1;
-    delete texture2;
     delete vao;
     delete shaderProgram;
     delete window;
