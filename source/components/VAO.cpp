@@ -2,22 +2,30 @@
 
 #include <glad/glad.h>
 
-VAO::VAO(VBO* vbo, EBO* ebo)
+VAO::VAO(bool useVBO, bool useEBO)
 {
-    this->vbo = vbo;
-    this->ebo = ebo;
+    if (useVBO)
+    {
+        vbo = new VBO();
+    }
+    if (useEBO)
+    {
+        ebo = new EBO();
+    }
 
-    glGenVertexArrays(1, &vaoID);
+    glGenVertexArrays(1, &id);
 }
 
 VAO::~VAO()
 {
-    glDeleteVertexArrays(1, &vaoID);
+    delete vbo;
+    delete ebo;
+    glDeleteVertexArrays(1, &id);
 }
 
 void VAO::bind() const
 {
-    glBindVertexArray(vaoID);
+    glBindVertexArray(id);
 }
 
 void VAO::unbind()
@@ -30,6 +38,18 @@ void VAO::addAttribute(int index, int size, int stride, int distance) const
     bind();
     glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)(distance * sizeof(float)));
     glEnableVertexAttribArray(index);
+}
+
+void VAO::loadVBO(float *vertices, int verticesSize, unsigned int verticesCount)
+{
+    bind();
+    vbo->load(vertices, verticesSize, verticesCount);
+}
+
+void VAO::loadEBO(unsigned int *indices, int indicesSize, unsigned int triangles)
+{
+    bind();
+    ebo->load(indices, indicesSize, triangles);
 }
 
 void VAO::draw() const
