@@ -2,26 +2,16 @@
 
 #include <glad/glad.h>
 
-VAO::VAO(float vertices[], int verticesSize, unsigned int indices[], int indicesSize, unsigned int triangles)
+VAO::VAO(VBO* vbo, EBO* ebo)
 {
-    this->triangles = triangles;
+    this->vbo = vbo;
+    this->ebo = ebo;
+
     glGenVertexArrays(1, &vaoID);
-    glGenBuffers(1, &vboID);
-    glGenBuffers(1, &eboID);
-
-    bind();
-    bindBuffers();
-
-    glBufferData(GL_ARRAY_BUFFER, verticesSize, vertices, GL_STATIC_DRAW);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSize, indices, GL_STATIC_DRAW);
-
-    unbind();
 }
 
 VAO::~VAO()
 {
-    glDeleteBuffers(1, &vboID);
-    glDeleteBuffers(1, &eboID);
     glDeleteVertexArrays(1, &vaoID);
 }
 
@@ -35,16 +25,9 @@ void VAO::unbind()
     glBindVertexArray(0);
 }
 
-void VAO::bindBuffers() const
-{
-    glBindBuffer(GL_ARRAY_BUFFER, vboID);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
-}
-
-void VAO::addAttribute(int index, int size, int stride, int distance)
+void VAO::addAttribute(int index, int size, int stride, int distance) const
 {
     bind();
-    bindBuffers();
     glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)(distance * sizeof(float)));
     glEnableVertexAttribArray(index);
 }
@@ -52,5 +35,11 @@ void VAO::addAttribute(int index, int size, int stride, int distance)
 void VAO::draw() const
 {
     bind();
-    glDrawElements(GL_TRIANGLES, triangles, GL_UNSIGNED_INT, nullptr);
+    if (ebo != nullptr) {
+        glDrawElements(GL_TRIANGLES, ebo->getTriangles(), GL_UNSIGNED_INT, nullptr);
+    }
+    else
+    {
+        glDrawArrays(GL_TRIANGLES, 0, vbo->getVerticesCount());
+    }
 }

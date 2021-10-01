@@ -1,21 +1,25 @@
 #ifndef OPENGLPROJECT_VAO_H
 #define OPENGLPROJECT_VAO_H
 
+#include "EBO.h"
+#include "VBO.h"
 
 class VAO {
 private:
-    unsigned int vaoID{}, vboID{}, eboID{}, triangles;
+    unsigned int vaoID{};
+    VBO* vbo;
+    EBO* ebo;
+
+
     static void unbind();
 
-    void bindBuffers() const;
-
 public:
-    VAO(float vertices[], int verticesSize, unsigned int indices[], int indicesSize, unsigned int triangles);
+    VAO(VBO* vbo, EBO* ebo = nullptr);
     ~VAO();
 
     void bind() const;
 
-    void addAttribute(int index, int size, int stride, int distance);
+    void addAttribute(int index, int size, int stride, int distance) const;
 
     void draw() const;
 };

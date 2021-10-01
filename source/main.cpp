@@ -9,6 +9,8 @@
 #include "components/ShaderProgram.h"
 #include "components/Texture.h"
 #include "components/VAO.h"
+#include "components/EBO.h"
+#include "components/VBO.h"
 
 int main()
 {
@@ -29,10 +31,12 @@ int main()
     }
 
     /* Load Shaders */
-    auto shaderProgram = new ShaderProgram("source/shaders/vertex.vert", "source/shaders/fragment.frag");
+//    auto shaderProgram = new ShaderProgram("source/shaders/vertex.vert", "source/shaders/fragment.frag");
+    auto shaderProgram = new ShaderProgram("source/shaders/cubeVertex.vert", "source/shaders/cubeFragment.frag");
+    glEnable(GL_DEPTH_TEST);
 
     /* Create Graphics */
-    float vertices[] = {
+    /*float vertices[] = {
         // positions          // colors           // texture coords
          0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
          0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
@@ -45,10 +49,68 @@ int main()
         1, 2, 3  // second triangle
     };
 
-    auto vao = new VAO(vertices, sizeof(vertices), indices, sizeof(indices), 6);
+    auto ebo = new EBO();
+    auto vbo = new VBO();
+    auto vao = new VAO(vbo, ebo);
+    vao->bind();
+    ebo->load(indices, sizeof(indices), 6);
+    vbo->load(vertices, sizeof(vertices));
+
     vao->addAttribute(0, 3, 8, 0); // Position
     vao->addAttribute(1, 3, 8, 3); // Color
-    vao->addAttribute(2, 2, 8, 6); // Texture
+    vao->addAttribute(2, 2, 8, 6); // Texture*/
+
+    float vertices[] = {
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+        0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+    };
+
+    auto vbo = new VBO();
+    auto vao = new VAO(vbo);
+    vao->bind();
+    vbo->load(vertices, sizeof(vertices), 36);
+
+    vao->addAttribute(0, 3, 5, 0);
+    vao->addAttribute(1, 2, 5, 3);
 
     /* Load & Create Texture */
     auto texture1 = new Texture("source/images/wall", "jpg");
@@ -61,7 +123,6 @@ int main()
 
     /* Coordinate Systems */
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::scale(model, glm::vec3(2.0f));
     model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     shaderProgram->setUniform("model", model);
 
@@ -81,12 +142,17 @@ int main()
 
         // Clear canvas
         glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        //glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Use shader
         shaderProgram->use();
 
         // Update uniforms
+        model = glm::mat4(1.0f);
+        model = glm::rotate(model, (float)(glfwGetTime()) * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+        shaderProgram->setUniform("model", model);
+
         projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
         shaderProgram->setUniform("projection", projection);
 
@@ -104,6 +170,8 @@ int main()
     /* Cleanup & Exit */
     delete texture1;
     delete texture2;
+    delete vbo;
+    //delete ebo;
     delete vao;
     delete shaderProgram;
     delete window;
