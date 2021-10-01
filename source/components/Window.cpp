@@ -39,6 +39,11 @@ void Window::update()
     // Check & call events & swap the buffers
     glfwSwapBuffers(window);
     glfwPollEvents();
+
+    // Get new deltatime
+    float currentTime = glfwGetTime();
+    deltaTime = currentTime - lastTime;
+    lastTime = currentTime;
 }
 
 void Window::processInput()
@@ -71,4 +76,9 @@ int Window::getHeight() const
 bool Window::keyDown(int key) const
 {
     return glfwGetKey(window, key) == GLFW_PRESS;
+}
+
+float Window::getDeltaTime() const
+{
+    return deltaTime;
 }

@@ -9,6 +9,7 @@
 #include "components/ShaderProgram.h"
 #include "components/Texture.h"
 #include "components/VAO.h"
+#include "components/Camera.h"
 
 int main()
 {
@@ -27,6 +28,9 @@ int main()
     {
         throw std::runtime_error("Failed to initialize GLAD");
     }
+
+    /* Camera */
+    auto camera = new Camera(2.5f, glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
     /* Load Shaders */
     //auto shaderProgram = new ShaderProgram("source/shaders/vertex.vert", "source/shaders/fragment.frag");
@@ -100,7 +104,6 @@ int main()
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
     };
 
-    //auto vbo = new VBO();
     auto vao = new VAO(true, false);
     vao->loadVBO(vertices, sizeof(vertices), 36);
 
@@ -117,23 +120,14 @@ int main()
     shaderProgram->setUniform("texture2", 1);
 
     /* Coordinate Systems */
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    shaderProgram->setUniform("model", model);
-
-    glm::mat4 view = glm::mat4(1.0f);
-    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-    shaderProgram->setUniform("view", view);
-
-    glm::mat4 projection;
-    projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
-    shaderProgram->setUniform("projection", projection);
+    glm::mat4 model, view, projection;
 
     /* Main loop */
     while (!window->shouldClose())
     {
         // Input
         window->processInput();
+        camera->processInput(window);
 
         // Clear canvas
         glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
@@ -144,8 +138,11 @@ int main()
 
         // Update uniforms
         model = glm::mat4(1.0f);
-        model = glm::rotate(model, (float)(glfwGetTime()) * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+        model = glm::rotate(model, static_cast<float>(glfwGetTime()) * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
         shaderProgram->setUniform("model", model);
+
+        view = glm::lookAt(camera->getPosition(), camera->getPosition() + camera->getFront(), camera->getUp());
+        shaderProgram->setUniform("view", view);
 
         projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
         shaderProgram->setUniform("projection", projection);
@@ -166,6 +163,7 @@ int main()
     delete texture2;
     delete vao;
     delete shaderProgram;
+    delete camera;
     delete window;
     glfwTerminate();
 

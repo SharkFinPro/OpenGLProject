@@ -7,6 +7,8 @@
 class Window {
 private:
     GLFWwindow* window;
+    float deltaTime = 0.0f;
+    float lastTime = 0.0f;
 
 public:
     Window(int width, int height, const char* name);
@@ -21,6 +23,8 @@ public:
     [[nodiscard]] int getHeight() const;
 
     [[nodiscard]] bool keyDown(int key) const;
+
+    [[nodiscard]] float getDeltaTime() const;
 };
 
 
