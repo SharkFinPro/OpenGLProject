@@ -30,7 +30,7 @@ int main()
     }
 
     /* Camera */
-    auto camera = new Camera(2.5f, glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    auto camera = new Camera();
 
     /* Load Shaders */
     //auto shaderProgram = new ShaderProgram("source/shaders/vertex.vert", "source/shaders/fragment.frag");
@@ -141,8 +141,7 @@ int main()
         model = glm::rotate(model, static_cast<float>(glfwGetTime()) * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
         shaderProgram->setUniform("model", model);
 
-        view = glm::lookAt(camera->getPosition(), camera->getPosition() + camera->getFront(), camera->getUp());
-        shaderProgram->setUniform("view", view);
+        shaderProgram->setUniform("view", camera->getViewMatrix());
 
         projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
         shaderProgram->setUniform("projection", projection);

@@ -1,51 +1,80 @@
 #include "Camera.h"
 
-Camera::Camera(float speed, glm::vec3 position, glm::vec3 up)
+#include <glm/gtc/matrix_transform.hpp>
+
+Camera::Camera()
 {
-    this->speed = speed;
-    this->position = position;
-    this->up = up;
-
-    direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    direction.y = sin(glm::radians(pitch));
-    direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-
-    //front = glm::normalize(direction);
+    position = glm::vec3(0.0f, 0.0f, -5.0f);
     front = glm::vec3(0.0f, 0.0f, 1.0f);
+    up = glm::vec3(0.0f, 1.0f, 0.0f);
 }
 
-glm::vec3 Camera::getPosition() const
+glm::mat4 Camera::getViewMatrix()
 {
-    return position;
-}
+    front.x = sin(yaw) * 1.25f;
+    front.y = sin(pitch);
 
-glm::vec3 Camera::getFront() const
-{
-    return front;
-}
-
-glm::vec3 Camera::getUp() const
-{
-    return up;
+    return glm::lookAt(position, position + front, up);
 }
 
 void Camera::processInput(Window *window)
 {
     float cameraSpeed = speed * window->getDeltaTime();
-    if (window->keyDown(GLFW_KEY_W))
+
+
+    // Position Change
+    if (window->keyDown(GLFW_KEY_KP_8))
     {
-        position += cameraSpeed * front;
+        position.z += cameraSpeed;
     }
-    if (window->keyDown(GLFW_KEY_S))
+    if (window->keyDown(GLFW_KEY_KP_2))
     {
-        position -= cameraSpeed * front;
+        position.z -= cameraSpeed;
     }
-    if (window->keyDown(GLFW_KEY_A))
+
+    if (window->keyDown(GLFW_KEY_KP_4))
     {
-        position -= cameraSpeed * glm::normalize(glm::cross(front, up));
+        position.x += cameraSpeed;
     }
-    if (window->keyDown(GLFW_KEY_D))
+    if (window->keyDown(GLFW_KEY_KP_6))
     {
-        position += cameraSpeed * glm::normalize(glm::cross(front, up));
+        position.x -= cameraSpeed;
+    }
+
+    if (window->keyDown(GLFW_KEY_KP_1))
+    {
+        position.y += cameraSpeed;
+    }
+    if (window->keyDown(GLFW_KEY_KP_3))
+    {
+        position.y -= cameraSpeed;
+    }
+
+    // yaw
+    if (window->keyDown(GLFW_KEY_RIGHT))
+    {
+        yaw -= cameraSpeed;
+    }
+    if (window->keyDown(GLFW_KEY_LEFT))
+    {
+        yaw += cameraSpeed;
+    }
+    // pitch
+    if (window->keyDown(GLFW_KEY_UP))
+    {
+        pitch += cameraSpeed;
+    }
+    if (window->keyDown(GLFW_KEY_DOWN))
+    {
+        pitch -= cameraSpeed;
+    }
+    // roll
+    if (window->keyDown(GLFW_KEY_Q))
+    {
+        roll += cameraSpeed;
+    }
+    if (window->keyDown(GLFW_KEY_E))
+    {
+        roll -= cameraSpeed;
     }
 }

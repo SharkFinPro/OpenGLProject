@@ -9,18 +9,17 @@ private:
     glm::vec3 position;
     glm::vec3 front;
     glm::vec3 up;
-    glm::vec3 direction;
 
     float speed = 2.5f;
-    float pitch = -0.0f;
-    float yaw = -90;
+
+    float pitch = 0.0f;
+    float roll = 0.0f;
+    float yaw = 0.0f;
 
 public:
-    Camera(float speed, glm::vec3 position, glm::vec3 up);
+    Camera();
 
-    [[nodiscard]] glm::vec3 getPosition() const;
-    [[nodiscard]] glm::vec3 getFront() const;
-    [[nodiscard]] glm::vec3 getUp() const;
+    [[nodiscard]] glm::mat4 getViewMatrix();
 
     void processInput(Window* window);
 };
