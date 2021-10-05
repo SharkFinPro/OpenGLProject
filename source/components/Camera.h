@@ -7,14 +7,9 @@
 class Camera {
 private:
     glm::vec3 position;
-    glm::vec3 front;
-    glm::vec3 up;
+    glm::vec3 direction;
 
     float speed = 2.5f;
-
-    float pitch = 0.0f;
-    float roll = 0.0f;
-    float yaw = 0.0f;
 
 public:
     Camera();

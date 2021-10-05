@@ -7,7 +7,6 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glfwMakeContextCurrent(window);
     glViewport(0, 0, width, height);
 }
-
 Window::Window(int width, int height, const char *name) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -22,6 +21,10 @@ Window::Window(int width, int height, const char *name) {
     }
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+    glfwGetCursorPos(window, &mouseX, &mouseY);
+    lastMouseX = mouseX;
+    lastMouseY = mouseY;
 }
 
 Window::~Window()
@@ -44,6 +47,11 @@ void Window::update()
     float currentTime = glfwGetTime();
     deltaTime = currentTime - lastTime;
     lastTime = currentTime;
+
+    // Get new mouse position
+    lastMouseX = mouseX;
+    lastMouseY = mouseY;
+    glfwGetCursorPos(window, &mouseX, &mouseY);
 }
 
 void Window::processInput()
@@ -81,4 +89,16 @@ bool Window::keyDown(int key) const
 float Window::getDeltaTime() const
 {
     return deltaTime;
+}
+
+void Window::getCursorPos(double& xpos, double& ypos) const
+{
+    xpos = mouseX;
+    ypos = mouseY;
+}
+
+void Window::getLastCursorPos(double& xpos, double& ypos) const
+{
+    xpos = lastMouseX;
+    ypos = lastMouseY;
 }

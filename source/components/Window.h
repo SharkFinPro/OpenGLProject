@@ -10,6 +10,8 @@ private:
     float deltaTime = 0.0f;
     float lastTime = 0.0f;
 
+    double mouseX, mouseY, lastMouseX, lastMouseY;
+
 public:
     Window(int width, int height, const char* name);
     ~Window();
@@ -25,6 +27,9 @@ public:
     [[nodiscard]] bool keyDown(int key) const;
 
     [[nodiscard]] float getDeltaTime() const;
+
+    void getCursorPos(double& xpos, double& ypos) const;
+    void getLastCursorPos(double& xpos, double& ypos) const;
 };
 
 

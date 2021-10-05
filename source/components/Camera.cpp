@@ -1,80 +1,64 @@
 #include "Camera.h"
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <glm/gtc/matrix_transform.hpp>
 
 Camera::Camera()
 {
     position = glm::vec3(0.0f, 0.0f, -5.0f);
-    front = glm::vec3(0.0f, 0.0f, 1.0f);
-    up = glm::vec3(0.0f, 1.0f, 0.0f);
+    direction = glm::vec3(0.0f, 0.0f, 1.0f);
 }
 
 glm::mat4 Camera::getViewMatrix()
 {
-    front.x = sin(yaw) * 1.25f;
-    front.y = sin(pitch);
-
-    return glm::lookAt(position, position + front, up);
+    //
+    return glm::lookAt(position, position + direction, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
-void Camera::processInput(Window *window)
+void Camera::processInput(Window* window)
 {
     float cameraSpeed = speed * window->getDeltaTime();
+
+    double mx, my, omx, omy;
+    window->getCursorPos(mx, my);
+    window->getLastCursorPos(omx, omy);
+
+    double deltaMX = mx - omx;
+    double deltaMY = my - omy;
+
+    /*if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
+    {
+        direction.x += deltaMX;
+        direction.y += deltaMY;
+    }*/
 
 
     // Position Change
     if (window->keyDown(GLFW_KEY_KP_8))
     {
-        position.z += cameraSpeed;
+        position.z += cameraSpeed * glm::normalize(direction).z;
     }
     if (window->keyDown(GLFW_KEY_KP_2))
     {
-        position.z -= cameraSpeed;
+        position.z -= cameraSpeed * glm::normalize(direction).z;
     }
 
     if (window->keyDown(GLFW_KEY_KP_4))
     {
-        position.x += cameraSpeed;
+        position.x += cameraSpeed * glm::normalize(direction).x;
     }
     if (window->keyDown(GLFW_KEY_KP_6))
     {
-        position.x -= cameraSpeed;
+        position.x -= cameraSpeed * glm::normalize(direction).x;
     }
 
     if (window->keyDown(GLFW_KEY_KP_1))
     {
-        position.y += cameraSpeed;
+        position.y += cameraSpeed * glm::normalize(direction).y;
     }
     if (window->keyDown(GLFW_KEY_KP_3))
     {
-        position.y -= cameraSpeed;
-    }
-
-    // yaw
-    if (window->keyDown(GLFW_KEY_RIGHT))
-    {
-        yaw -= cameraSpeed;
-    }
-    if (window->keyDown(GLFW_KEY_LEFT))
-    {
-        yaw += cameraSpeed;
-    }
-    // pitch
-    if (window->keyDown(GLFW_KEY_UP))
-    {
-        pitch += cameraSpeed;
-    }
-    if (window->keyDown(GLFW_KEY_DOWN))
-    {
-        pitch -= cameraSpeed;
-    }
-    // roll
-    if (window->keyDown(GLFW_KEY_Q))
-    {
-        roll += cameraSpeed;
-    }
-    if (window->keyDown(GLFW_KEY_E))
-    {
-        roll -= cameraSpeed;
+        position.y -= cameraSpeed * glm::normalize(direction).y;
     }
 }
