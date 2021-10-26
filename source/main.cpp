@@ -33,94 +33,64 @@ int main()
     auto camera = new Camera();
 
     /* Load Shaders */
-    //auto shaderProgram = new ShaderProgram("source/shaders/vertex.vert", "source/shaders/fragment.frag");
-    auto shaderProgram = new ShaderProgram("source/shaders/cubeVertex.vert", "source/shaders/cubeFragment.frag");
+    auto cubeShader = new ShaderProgram("source/shaders/cube.vert", "source/shaders/cube.frag");
+    auto lightCubeShader = new ShaderProgram("source/shaders/lightCube.vert", "source/shaders/lightCube.frag");
     glEnable(GL_DEPTH_TEST);
 
     /* Create Graphics */
-    /*float vertices[] = {
-        // positions          // colors           // texture coords
-         0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-         0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left
-    };
-
-    unsigned int indices[] = {
-        0, 1, 3, // first triangle
-        1, 2, 3  // second triangle
-    };
-
-    auto vao = new VAO(true, true);
-    vao->bind();
-    vao->loadVBO(vertices, sizeof(vertices));
-    vao->loadEBO(indices, sizeof(indices), 6);
-
-    vao->addAttribute(0, 3, 8, 0); // Position
-    vao->addAttribute(1, 3, 8, 3); // Color
-    vao->addAttribute(2, 2, 8, 6); // Texture*/
-
     float vertices[] = {
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f,  0.5f, -0.5f,
+        0.5f,  0.5f, -0.5f,
+        -0.5f,  0.5f, -0.5f,
+        -0.5f, -0.5f, -0.5f,
 
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,
+        0.5f, -0.5f,  0.5f,
+        0.5f,  0.5f,  0.5f,
+        0.5f,  0.5f,  0.5f,
+        -0.5f,  0.5f,  0.5f,
+        -0.5f, -0.5f,  0.5f,
 
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,
+        -0.5f,  0.5f, -0.5f,
+        -0.5f, -0.5f, -0.5f,
+        -0.5f, -0.5f, -0.5f,
+        -0.5f, -0.5f,  0.5f,
+        -0.5f,  0.5f,  0.5f,
 
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+        0.5f,  0.5f,  0.5f,
+        0.5f,  0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f,  0.5f,
+        0.5f,  0.5f,  0.5f,
 
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f,  0.5f,
+        0.5f, -0.5f,  0.5f,
+        -0.5f, -0.5f,  0.5f,
+        -0.5f, -0.5f, -0.5f,
 
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+        -0.5f,  0.5f, -0.5f,
+        0.5f,  0.5f, -0.5f,
+        0.5f,  0.5f,  0.5f,
+        0.5f,  0.5f,  0.5f,
+        -0.5f,  0.5f,  0.5f,
+        -0.5f,  0.5f, -0.5f,
     };
 
-    auto vao = new VAO(true, false);
-    vao->loadVBO(vertices, sizeof(vertices), 36);
+    auto cubeVAO = new VAO(true, false);
+    cubeVAO->loadVBO(vertices, sizeof(vertices), 36);
+    cubeVAO->addAttribute(0, 3, 3, 0);
 
-    vao->addAttribute(0, 3, 5, 0);
-    vao->addAttribute(1, 2, 5, 3);
+    auto lightCubeVAO = new VAO(true, false);
+    lightCubeVAO->loadVBO(vertices, sizeof(vertices), 36);
+    lightCubeVAO->addAttribute(0, 3, 3, 0);
 
-    /* Load & Create Texture */
-    auto texture1 = new Texture("source/images/wall", "jpg");
-    auto texture2 = new Texture("source/images/awesomeface", "png");
-
-    /* Set Uniforms */
-    shaderProgram->use();
-    shaderProgram->setUniform("texture1", 0);
-    shaderProgram->setUniform("texture2", 1);
-
-    /* Coordinate Systems */
-    glm::mat4 model, view, projection;
+    glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
     /* Main loop */
     while (!window->shouldClose())
@@ -133,35 +103,46 @@ int main()
         glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // Use shader
-        shaderProgram->use();
+        // Draw cube
+        cubeShader->use();
+        cubeShader->setUniform("objectColor", 1.0f, 0.5f, 0.31f);
+        cubeShader->setUniform("lightColor",  1.0f, 1.0f, 1.0f);
 
-        // Update uniforms
+        glm::mat4 model = glm::mat4(1.0f);
+        glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
+        glm::mat4 view = camera->getViewMatrix();
+
+        cubeShader->setUniform("model", model);
+        cubeShader->setUniform("view", view);
+        cubeShader->setUniform("projection", projection);
+
+        cubeVAO->draw();
+
+
+        // Draw light cube
+        lightCubeShader->use();
+
         model = glm::mat4(1.0f);
-        model = glm::rotate(model, static_cast<float>(glfwGetTime()) * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-        shaderProgram->setUniform("model", model);
-
-        shaderProgram->setUniform("view", camera->getViewMatrix());
-
+        model = glm::translate(model, lightPos);
+        model = glm::scale(model, glm::vec3(0.2f));
         projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
-        shaderProgram->setUniform("projection", projection);
+        view = camera->getViewMatrix();
 
-        // Bind texture
-        texture1->bind(GL_TEXTURE0);
-        texture2->bind(GL_TEXTURE1);
+        lightCubeShader->setUniform("model", model);
+        lightCubeShader->setUniform("view", view);
+        lightCubeShader->setUniform("projection", projection);
 
-        // Draw Object
-        vao->draw();
+        lightCubeVAO->draw();
 
         // Check & call events & swap the buffers
         window->update();
     }
 
     /* Cleanup & Exit */
-    delete texture1;
-    delete texture2;
-    delete vao;
-    delete shaderProgram;
+    delete cubeShader;
+    delete lightCubeShader;
+    delete cubeVAO;
+    delete lightCubeVAO;
     delete camera;
     delete window;
     glfwTerminate();
