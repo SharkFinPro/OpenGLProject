@@ -89,3 +89,8 @@ void ShaderProgram::setUniform(const char* name, const glm::mat4& value) const
 {
     glUniformMatrix4fv(glGetUniformLocation(programID, name), 1, GL_FALSE, glm::value_ptr(value));
 }
+
+void ShaderProgram::setUniform(const char *name, const float &x, const float &y, const float &z) const
+{
+    glUniform3f(glGetUniformLocation(programID, name), x, y, z);
+}

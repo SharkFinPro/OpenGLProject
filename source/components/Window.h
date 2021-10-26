@@ -25,6 +25,7 @@ public:
     [[nodiscard]] int getHeight() const;
 
     [[nodiscard]] bool keyDown(int key) const;
+    [[nodiscard]] bool buttonDown(int button) const;
 
     [[nodiscard]] float getDeltaTime() const;
 

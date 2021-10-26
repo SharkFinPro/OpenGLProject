@@ -13,6 +13,7 @@ Window::Window(int width, int height, const char *name) {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     window = glfwCreateWindow(width, height, name, nullptr, nullptr);
+//    window = glfwCreateWindow(1920, 1080, name, glfwGetPrimaryMonitor(), nullptr);
 
     if (window == nullptr)
     {
@@ -84,6 +85,11 @@ int Window::getHeight() const
 bool Window::keyDown(int key) const
 {
     return glfwGetKey(window, key) == GLFW_PRESS;
+}
+
+bool Window::buttonDown(int button) const
+{
+    return glfwGetMouseButton(window, button) == GLFW_PRESS;
 }
 
 float Window::getDeltaTime() const
