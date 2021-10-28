@@ -120,6 +120,21 @@ int main()
 
         cubeVAO->draw();
 
+        cubeShader->setUniform("objectColor", 1.0f, 1.0f, 0.31f);
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, -10.0f));
+        cubeShader->setUniform("model", model);
+        cubeVAO->draw();
+
+        cubeShader->setUniform("objectColor", 0.0f, 1.0f, 0.31f);
+        model = glm::translate(model, glm::vec3(-10.0f, 0.0f, 5.0f));
+        cubeShader->setUniform("model", model);
+        cubeVAO->draw();
+
+        cubeShader->setUniform("objectColor", 0.0f, 0.0f, 1.0f);
+        model = glm::translate(model, glm::vec3(20.0f, 0.0f, 0.0f));
+        cubeShader->setUniform("model", model);
+        cubeVAO->draw();
+
 
         // Draw light cube
         lightCubeShader->use();
