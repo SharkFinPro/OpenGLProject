@@ -45,7 +45,7 @@ void Window::update()
     glfwPollEvents();
 
     // Get new deltatime
-    float currentTime = glfwGetTime();
+    float currentTime = static_cast<float>(glfwGetTime());
     deltaTime = currentTime - lastTime;
     lastTime = currentTime;
 

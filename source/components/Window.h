@@ -10,7 +10,7 @@ private:
     float deltaTime = 0.0f;
     float lastTime = 0.0f;
 
-    double mouseX, mouseY, lastMouseX, lastMouseY;
+    double mouseX = 0, mouseY = 0, lastMouseX, lastMouseY;
 
 public:
     Window(int width, int height, const char* name);

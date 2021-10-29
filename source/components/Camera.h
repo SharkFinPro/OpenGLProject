@@ -6,13 +6,16 @@
 
 class Camera {
 private:
-    glm::vec3 position;
-    glm::vec3 direction;
+    glm::vec3 position{};
+    glm::vec3 direction = glm::vec3(0.0f, 0.0f, -1.0f);
 
     float speed = 2.5f;
 
+    float pitch = 0.0f;
+    float yaw = 90.0f;
+
 public:
-    Camera();
+    explicit Camera(glm::vec3 pos = glm::vec3(0.0f, 0.0f, 0.0f));
 
     [[nodiscard]] glm::mat4 getViewMatrix();
 

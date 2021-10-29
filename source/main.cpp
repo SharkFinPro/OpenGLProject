@@ -7,7 +7,6 @@
 
 #include "components/Window.h"
 #include "components/ShaderProgram.h"
-#include "components/Texture.h"
 #include "components/VAO.h"
 #include "components/Camera.h"
 
@@ -30,7 +29,7 @@ int main()
     }
 
     /* Camera */
-    auto camera = new Camera();
+    auto camera = new Camera(glm::vec3(0.0f, 0.0f, -5.0f));
 
     /* Load Shaders */
     auto cubeShader = new ShaderProgram("source/shaders/cube.vert", "source/shaders/cube.frag");
@@ -126,12 +125,12 @@ int main()
         cubeVAO->draw();
 
         cubeShader->setUniform("objectColor", 0.0f, 1.0f, 0.31f);
-        model = glm::translate(model, glm::vec3(-10.0f, 0.0f, 5.0f));
+        model = glm::translate(model, glm::vec3(-5.0f, 0.0f, 5.0f));
         cubeShader->setUniform("model", model);
         cubeVAO->draw();
 
         cubeShader->setUniform("objectColor", 0.0f, 0.0f, 1.0f);
-        model = glm::translate(model, glm::vec3(20.0f, 0.0f, 0.0f));
+        model = glm::translate(model, glm::vec3(10.0f, 0.0f, 0.0f));
         cubeShader->setUniform("model", model);
         cubeVAO->draw();
 
