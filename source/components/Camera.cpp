@@ -12,6 +12,11 @@ glm::mat4 Camera::getViewMatrix()
     return glm::lookAt(position, position + direction, glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
+glm::vec3 Camera::getPosition()
+{
+    return position;
+}
+
 void Camera::processInput(Window* window)
 {
     float cameraSpeed = speed * window->getDeltaTime();

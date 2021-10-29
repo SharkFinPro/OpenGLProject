@@ -105,10 +105,16 @@ int main()
 
         // Draw cube
         cubeShader->use();
-        cubeShader->setUniform("objectColor", 1.0f, 0.5f, 0.31f);
         cubeShader->setUniform("lightColor",  1.0f, 1.0f, 1.0f);
-        cubeShader->setUniform("lightPos",  lightPos.x, lightPos.y, lightPos.z);
+        cubeShader->setUniform("viewPos",  camera->getPosition().x, camera->getPosition().y, camera->getPosition().z);
 
+        // load light info
+        cubeShader->setUniform("light.position",  lightPos.x, lightPos.y, lightPos.z);
+        cubeShader->setUniform("light.ambient",  0.4f, 0.4f, 0.4f);
+        cubeShader->setUniform("light.diffuse",  0.75f, 0.75f, 0.75f);
+        cubeShader->setUniform("light.specular",  1.0f, 1.0f, 1.0f);
+
+        // load cube matrices
         glm::mat4 model = glm::mat4(1.0f);
         glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
         glm::mat4 view = camera->getViewMatrix();
@@ -117,19 +123,44 @@ int main()
         cubeShader->setUniform("view", view);
         cubeShader->setUniform("projection", projection);
 
+        // load cube specular & shininess
+        cubeShader->setUniform("material.specular",  0.5f, 0.5f, 0.5f);
+        cubeShader->setUniform("material.shininess",  32.0f);
+
+        // cube 1
+        glm::vec3 c = glm::vec3(1.0f, 0.5f, 0.31f);
+        glm::vec3 diffuse = c * 0.75f;
+        glm::vec3 ambient = diffuse * 0.4f;
+        cubeShader->setUniform("material.ambient", ambient.x, ambient.y, ambient.z);
+        cubeShader->setUniform("material.diffuse", diffuse.x, diffuse.y, diffuse.z);
         cubeVAO->draw();
 
-        cubeShader->setUniform("objectColor", 1.0f, 1.0f, 0.31f);
+        // cube 2
+        c = glm::vec3(1.0f, 1.0f, 0.31f);
+        diffuse = c * 0.75f;
+        ambient = diffuse * 0.4f;
+        cubeShader->setUniform("material.ambient", ambient.x, ambient.y, ambient.z);
+        cubeShader->setUniform("material.diffuse", diffuse.x, diffuse.y, diffuse.z);
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, -10.0f));
         cubeShader->setUniform("model", model);
         cubeVAO->draw();
 
-        cubeShader->setUniform("objectColor", 0.0f, 1.0f, 0.31f);
+        // cube 3
+        c = glm::vec3(0.0f, 1.0f, 0.31f);
+        diffuse = c * 0.75f;
+        ambient = diffuse * 0.4f;
+        cubeShader->setUniform("material.ambient", ambient.x, ambient.y, ambient.z);
+        cubeShader->setUniform("material.diffuse", diffuse.x, diffuse.y, diffuse.z);
         model = glm::translate(model, glm::vec3(-5.0f, 0.0f, 5.0f));
         cubeShader->setUniform("model", model);
         cubeVAO->draw();
 
-        cubeShader->setUniform("objectColor", 0.0f, 0.0f, 1.0f);
+        // cube 4
+        c = glm::vec3(0.0f, 0.0f, 1.0f);
+        diffuse = c * 0.75f;
+        ambient = diffuse * 0.4f;
+        cubeShader->setUniform("material.ambient", ambient.x, ambient.y, ambient.z);
+        cubeShader->setUniform("material.diffuse", diffuse.x, diffuse.y, diffuse.z);
         model = glm::translate(model, glm::vec3(10.0f, 0.0f, 0.0f));
         cubeShader->setUniform("model", model);
         cubeVAO->draw();
