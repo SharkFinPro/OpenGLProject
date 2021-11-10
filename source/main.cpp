@@ -7,8 +7,9 @@
 
 #include "components/Window.h"
 #include "components/ShaderProgram.h"
-#include "components/objects/VAO.h"
 #include "components/Camera.h"
+
+#include "components/objects/Object.h"
 
 int main()
 {
@@ -82,6 +83,8 @@ int main()
     cubeVAO->addAttribute(0, 3, 6, 0);
     cubeVAO->addAttribute(1, 3, 6, 3);
 
+    auto cube = new Object({ 0.4f, 0.75f, 0.5f, 32.0f}, cubeVAO);
+
     auto lightCubeVAO = new VAO(true, false);
     lightCubeVAO->loadVBO(vertices, sizeof(vertices), 36);
     lightCubeVAO->addAttribute(0, 3, 6, 0);
@@ -119,18 +122,8 @@ int main()
         cubeShader->setUniform("view", view);
         cubeShader->setUniform("projection", projection);
 
-        // load cube specular & shininess
-        cubeShader->setUniform("material.specular",  0.5f, 0.5f, 0.5f);
-        cubeShader->setUniform("material.shininess",  32.0f);
-
-        // cube 1
-        glm::vec3 c = glm::vec3(1.0f, 0.5f, 0.31f);
-        glm::vec3 diffuse = c * 0.75f;
-        glm::vec3 ambient = diffuse * 0.4f;
-        cubeShader->setUniform("material.ambient", ambient.x, ambient.y, ambient.z);
-        cubeShader->setUniform("material.diffuse", diffuse.x, diffuse.y, diffuse.z);
-        cubeVAO->draw();
-
+        // Render cube
+        cube->render(cubeShader);
 
         // Draw light cube
         lightCubeShader->use();
