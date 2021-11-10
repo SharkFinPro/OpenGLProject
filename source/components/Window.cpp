@@ -7,13 +7,19 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glfwMakeContextCurrent(window);
     glViewport(0, 0, width, height);
 }
-Window::Window(int width, int height, const char *name) {
+Window::Window(int width, int height, const char *name, bool fullscreen) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(width, height, name, nullptr, nullptr);
-//    window = glfwCreateWindow(1920, 1080, name, glfwGetPrimaryMonitor(), nullptr);
+    if (fullscreen)
+    {
+        GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+        window = glfwCreateWindow(mode->width, mode->height, name, monitor, nullptr);
+    }
+    else
+        window = glfwCreateWindow(width, height, name, nullptr, nullptr);
 
     if (window == nullptr)
     {
@@ -58,9 +64,7 @@ void Window::update()
 void Window::processInput()
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    {
         glfwSetWindowShouldClose(window, true);
-    }
 }
 
 void Window::makeCurrentContext()

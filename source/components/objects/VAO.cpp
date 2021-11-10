@@ -5,13 +5,10 @@
 VAO::VAO(bool useVBO, bool useEBO)
 {
     if (useVBO)
-    {
         vbo = new VBO();
-    }
+
     if (useEBO)
-    {
         ebo = new EBO();
-    }
 
     glGenVertexArrays(1, &id);
 }
@@ -55,11 +52,8 @@ void VAO::loadEBO(unsigned int *indices, int indicesSize, unsigned int triangles
 void VAO::draw() const
 {
     bind();
-    if (ebo != nullptr) {
+    if (ebo != nullptr)
         glDrawElements(GL_TRIANGLES, ebo->getTriangles(), GL_UNSIGNED_INT, nullptr);
-    }
     else
-    {
         glDrawArrays(GL_TRIANGLES, 0, vbo->getVerticesCount());
-    }
 }

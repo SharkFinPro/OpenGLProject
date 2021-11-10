@@ -7,26 +7,22 @@
 
 #include "components/Window.h"
 #include "components/ShaderProgram.h"
-#include "components/VAO.h"
+#include "components/objects/VAO.h"
 #include "components/Camera.h"
 
 int main()
 {
     /* Initialize GLFW */
     if (!glfwInit())
-    {
         throw std::runtime_error("Failed to initialize GLFW");
-    }
 
     /* Create Window */
-    auto window = new Window(800, 600, "Learn OpenGL");
+    auto window = new Window(800, 600, "Learn OpenGL", true);
     window->makeCurrentContext();
 
     /* Load GLAD */
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
         throw std::runtime_error("Failed to initialize GLAD");
-    }
 
     /* Camera */
     auto camera = new Camera(glm::vec3(0.0f, 0.0f, -5.0f));
@@ -133,36 +129,6 @@ int main()
         glm::vec3 ambient = diffuse * 0.4f;
         cubeShader->setUniform("material.ambient", ambient.x, ambient.y, ambient.z);
         cubeShader->setUniform("material.diffuse", diffuse.x, diffuse.y, diffuse.z);
-        cubeVAO->draw();
-
-        // cube 2
-        c = glm::vec3(1.0f, 1.0f, 0.31f);
-        diffuse = c * 0.75f;
-        ambient = diffuse * 0.4f;
-        cubeShader->setUniform("material.ambient", ambient.x, ambient.y, ambient.z);
-        cubeShader->setUniform("material.diffuse", diffuse.x, diffuse.y, diffuse.z);
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, -10.0f));
-        cubeShader->setUniform("model", model);
-        cubeVAO->draw();
-
-        // cube 3
-        c = glm::vec3(0.0f, 1.0f, 0.31f);
-        diffuse = c * 0.75f;
-        ambient = diffuse * 0.4f;
-        cubeShader->setUniform("material.ambient", ambient.x, ambient.y, ambient.z);
-        cubeShader->setUniform("material.diffuse", diffuse.x, diffuse.y, diffuse.z);
-        model = glm::translate(model, glm::vec3(-5.0f, 0.0f, 5.0f));
-        cubeShader->setUniform("model", model);
-        cubeVAO->draw();
-
-        // cube 4
-        c = glm::vec3(0.0f, 0.0f, 1.0f);
-        diffuse = c * 0.75f;
-        ambient = diffuse * 0.4f;
-        cubeShader->setUniform("material.ambient", ambient.x, ambient.y, ambient.z);
-        cubeShader->setUniform("material.diffuse", diffuse.x, diffuse.y, diffuse.z);
-        model = glm::translate(model, glm::vec3(10.0f, 0.0f, 0.0f));
-        cubeShader->setUniform("model", model);
         cubeVAO->draw();
 
 

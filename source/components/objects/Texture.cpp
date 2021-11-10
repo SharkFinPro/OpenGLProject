@@ -23,19 +23,14 @@ Texture::Texture(const char* fileName, const char* fileType)
     if (data)
     {
         if (strcmp(fileType, "jpg") == 0)
-        {
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        }
         else if (strcmp(fileType, "png") == 0)
-        {
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-        }
+
         glGenerateMipmap(GL_TEXTURE_2D);
     }
     else
-    {
         throw std::runtime_error("Failed to load texture");
-    }
 
     stbi_image_free(data);
 }

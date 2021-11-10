@@ -35,25 +35,16 @@ void Camera::processInput(Window* window)
     }
 
     if (pitch > 89.0f)
-    {
         pitch = 89.0f;
-    }
-
-    if (pitch < -89.0f)
-    {
+    else if (pitch < -89.0f)
         pitch = -89.0f;
-    }
 
     direction.x = static_cast<float>(glm::cos(glm::radians(yaw)) * cos(glm::radians(pitch)));
     direction.y = static_cast<float>(glm::sin(glm::radians(pitch)));
     direction.z = static_cast<float>(glm::sin(glm::radians(yaw)) * cos(glm::radians(pitch)));
 
     if (window->keyDown(GLFW_KEY_W))
-    {
         position += cameraSpeed * direction;
-    }
     if (window->keyDown(GLFW_KEY_S))
-    {
         position -= cameraSpeed * direction;
-    }
 }

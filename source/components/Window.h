@@ -13,7 +13,7 @@ private:
     double mouseX = 0, mouseY = 0, lastMouseX, lastMouseY;
 
 public:
-    Window(int width, int height, const char* name);
+    Window(int width, int height, const char* name, bool fullscreen);
     ~Window();
 
     [[nodiscard]] bool shouldClose() const;
