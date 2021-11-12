@@ -1,8 +1,9 @@
 #include "LightObject.h"
 
 LightObject::LightObject(LightMaterial lightMaterial)
+    : material(lightMaterial)
 {
-    material = lightMaterial;
+
 }
 
 LightObject::~LightObject()

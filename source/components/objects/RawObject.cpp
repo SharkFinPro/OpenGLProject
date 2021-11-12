@@ -1,9 +1,9 @@
 #include "RawObject.h"
 
 RawObject::RawObject(VAO *vao, Texture *texture)
+    : vao(vao), texture(texture)
 {
-    this->vao = vao;
-    this->texture = texture;
+
 }
 
 RawObject::~RawObject()

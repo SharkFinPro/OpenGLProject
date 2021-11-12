@@ -1,9 +1,9 @@
 #include "Object.h"
 
-Object::Object(LightMaterial lightMaterial, VAO* vao) : RawObject(vao)
+Object::Object(LightMaterial lightMaterial, VAO* vao)
+    : RawObject(vao), lightMaterial(lightMaterial), vao(vao)
 {
-    this->lightMaterial = lightMaterial;
-    this->vao = vao;
+
 }
 
 /*void Object::render() const

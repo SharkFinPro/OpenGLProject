@@ -3,8 +3,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 Camera::Camera(glm::vec3 pos)
+    : position(pos)
 {
-    position = pos;
+
 }
 
 glm::mat4 Camera::getViewMatrix()
@@ -16,7 +17,7 @@ glm::vec3 Camera::getPosition()
 {
     return position;
 }
-#include <iostream>
+
 void Camera::processInput(Window* window)
 {
     float cameraSpeed = speed * window->getDeltaTime();
