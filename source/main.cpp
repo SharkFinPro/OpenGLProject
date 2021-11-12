@@ -1,11 +1,3 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#include <glm/gtc/matrix_transform.hpp>
-
-#include "components/ShaderProgram.h"
-#include "components/objects/Object.h"
-
 #include "RenderEngine.h"
 
 float vertices[] = {
@@ -60,7 +52,6 @@ int main()
     /* Load Shaders */
     auto cubeShader = new ShaderProgram("source/shaders/cube/cube.vert", "source/shaders/cube/cube.frag");
     auto lightCubeShader = new ShaderProgram("source/shaders/light objects/light.vert", "source/shaders/light objects/light.frag");
-    glEnable(GL_DEPTH_TEST);
 
     /* Create Graphics */
     auto cubeVAO = new VAO(true, false);
@@ -100,7 +91,9 @@ int main()
     delete lightCubeShader;
     delete cubeVAO;
     delete lightCubeVAO;
-    glfwTerminate();
+    delete cube;
+    delete lightCube;
+    delete engine;
 
     return 0;
 }

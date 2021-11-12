@@ -1,5 +1,4 @@
 #include "VAO.h"
-
 #include <glad/glad.h>
 
 VAO::VAO(bool useVBO, bool useEBO)

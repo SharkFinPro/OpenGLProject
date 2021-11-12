@@ -12,6 +12,9 @@ private:
     Camera* camera;
 
     glm::vec3 lightPosition = glm::vec3(1.2f, 1.0f, -1.0f);
+    glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
+
+    void loadLightData(ShaderProgram* shaderProgram) const;
 
 public:
     RenderEngine();

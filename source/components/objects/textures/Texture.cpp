@@ -2,7 +2,6 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
-
 #include <stdexcept>
 
 Texture::Texture(const char* fileName, const char* fileType)

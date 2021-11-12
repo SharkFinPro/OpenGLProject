@@ -1,5 +1,4 @@
 #include "VBO.h"
-
 #include <glad/glad.h>
 
 VBO::VBO()

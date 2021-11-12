@@ -1,5 +1,4 @@
 #include "RenderEngine.h"
-
 #include <stdexcept>
 
 RenderEngine::RenderEngine()
@@ -16,6 +15,8 @@ RenderEngine::RenderEngine()
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         throw std::runtime_error("Failed to initialize GLAD");
 
+    glEnable(GL_DEPTH_TEST);
+
     /* Camera */
     camera = new Camera(glm::vec3(0.0f, 0.0f, -5.0f));
 }
@@ -24,6 +25,8 @@ RenderEngine::~RenderEngine()
 {
     delete window;
     delete camera;
+
+    glfwTerminate();
 }
 
 bool RenderEngine::windowShouldClose()
@@ -36,20 +39,24 @@ void RenderEngine::updateWindow()
     window->update();
 }
 
+void RenderEngine::loadLightData(ShaderProgram* shaderProgram) const
+{
+    shaderProgram->setUniform("light.position",  lightPosition.x, lightPosition.y, lightPosition.z);
+    shaderProgram->setUniform("light.color", lightColor.x, lightColor.y, lightColor.z);
+
+    shaderProgram->setUniform("light.ambient",  0.4f, 0.4f, 0.4f);
+    shaderProgram->setUniform("light.diffuse",  0.75f, 0.75f, 0.75f);
+    shaderProgram->setUniform("light.specular",  1.0f, 1.0f, 1.0f);
+}
+
 void RenderEngine::render(Object* object, ShaderProgram* shaderProgram)
 {
     // set objects shader to use
     shaderProgram->use();
 
-    // load uniforms
-    shaderProgram->setUniform("lightColor", 1.0f, 1.0f, 1.0f);
+    // Load uniforms
+    loadLightData(shaderProgram);
     shaderProgram->setUniform("viewPos",  camera->getPosition().x, camera->getPosition().y, camera->getPosition().z);
-
-    // load light info
-    shaderProgram->setUniform("light.position",  lightPosition.x, lightPosition.y, lightPosition.z);
-    shaderProgram->setUniform("light.ambient",  0.4f, 0.4f, 0.4f);
-    shaderProgram->setUniform("light.diffuse",  0.75f, 0.75f, 0.75f);
-    shaderProgram->setUniform("light.specular",  1.0f, 1.0f, 1.0f);
 
     // load object matrices
     glm::mat4 model = glm::mat4(1.0f);
@@ -62,7 +69,7 @@ void RenderEngine::render(Object* object, ShaderProgram* shaderProgram)
     // render
     object->render(shaderProgram);
 }
-#include <iostream>
+
 void RenderEngine::renderLight(Object *object, ShaderProgram *shaderProgram)
 {
     shaderProgram->use();

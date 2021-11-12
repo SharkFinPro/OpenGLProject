@@ -1,9 +1,6 @@
 #include "ShaderProgram.h"
-
 #include <glad/glad.h>
-#include <iostream>
 #include <stdexcept>
-
 #include "../helpers/FileIO.h"
 
 ShaderProgram::ShaderProgram(const char* vertex, const char* fragment)
