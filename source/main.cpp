@@ -18,7 +18,7 @@ int main()
         throw std::runtime_error("Failed to initialize GLFW");
 
     /* Create Window */
-    auto window = new Window(800, 600, "Learn OpenGL", true);
+    auto window = new Window(800, 600, "Learn OpenGL", false);
     window->makeCurrentContext();
 
     /* Load GLAD */
@@ -29,8 +29,8 @@ int main()
     auto camera = new Camera(glm::vec3(0.0f, 0.0f, -5.0f));
 
     /* Load Shaders */
-    auto cubeShader = new ShaderProgram("source/shaders/cube.vert", "source/shaders/cube.frag");
-    auto lightCubeShader = new ShaderProgram("source/shaders/lightCube.vert", "source/shaders/lightCube.frag");
+    auto cubeShader = new ShaderProgram("source/shaders/cube/cube.vert", "source/shaders/cube/cube.frag");
+    auto lightCubeShader = new ShaderProgram("source/shaders/light objects/light.vert", "source/shaders/light objects/light.frag");
     glEnable(GL_DEPTH_TEST);
 
     /* Create Graphics */

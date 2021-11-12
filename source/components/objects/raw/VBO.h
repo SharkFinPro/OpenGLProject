@@ -14,7 +14,7 @@ public:
     void bind() const;
     void load(float vertices[], int verticesSize, unsigned int verticesCount = {});
 
-    unsigned int getVerticesCount() const;
+    [[nodiscard]] unsigned int getVerticesCount() const;
 };
 
 

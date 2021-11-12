@@ -4,16 +4,19 @@
 #include "RawObject.h"
 #include "../ShaderProgram.h"
 #include "lighting/LightMaterial.h"
-#include "indices/VAO.h"
+#include "raw/VAO.h"
 
 class Object : public RawObject {
 private:
     LightMaterial lightMaterial;
 
+    VAO* vao;
+
 public:
     Object(LightMaterial lightMaterial, VAO* vao);
 
-    void render() const;
+    //void render() const;
+    void render(ShaderProgram* shaderProgram) const;
 };
 
 /*class Object {

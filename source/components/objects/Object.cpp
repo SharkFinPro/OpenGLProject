@@ -3,14 +3,15 @@
 Object::Object(LightMaterial lightMaterial, VAO* vao) : RawObject(vao)
 {
     this->lightMaterial = lightMaterial;
+    this->vao = vao;
 }
 
-void Object::render() const
+/*void Object::render() const
 {
 
-}
+}*/
 
-/*
+
 void Object::render(ShaderProgram* shaderProgram) const
 {
     // Set uniforms
@@ -24,4 +25,4 @@ void Object::render(ShaderProgram* shaderProgram) const
 
     // Draw the VAO
     vao->draw();
-}*/
+}

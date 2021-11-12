@@ -16,7 +16,7 @@ glm::vec3 Camera::getPosition()
 {
     return position;
 }
-
+#include <iostream>
 void Camera::processInput(Window* window)
 {
     float cameraSpeed = speed * window->getDeltaTime();
@@ -25,8 +25,8 @@ void Camera::processInput(Window* window)
     window->getCursorPos(mx, my);
     window->getLastCursorPos(omx, omy);
 
-    auto deltaMX = static_cast<float>(mx - omx);
-    auto deltaMY = static_cast<float>(my - omy);
+    auto deltaMX = static_cast<float>(mx - omx) / (static_cast<float>(window->getWidth()) / 800.0f);
+    auto deltaMY = static_cast<float>(my - omy) / (static_cast<float>(window->getHeight()) / 600.0f);
 
     if (window->buttonDown(GLFW_MOUSE_BUTTON_RIGHT))
     {

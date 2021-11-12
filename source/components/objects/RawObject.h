@@ -1,7 +1,7 @@
 #ifndef OPENGLPROJECT_RAWOBJECT_H
 #define OPENGLPROJECT_RAWOBJECT_H
 
-#include "indices/VAO.h"
+#include "raw/VAO.h"
 #include "textures/Texture.h"
 
 class RawObject {
