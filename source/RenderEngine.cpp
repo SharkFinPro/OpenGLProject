@@ -19,6 +19,9 @@ RenderEngine::RenderEngine()
 
     /* Camera */
     camera = new Camera(glm::vec3(0.0f, 0.0f, -5.0f));
+
+    /* Shader Manager */
+    shaderManager = new ShaderManager();
 }
 
 RenderEngine::~RenderEngine()
@@ -39,7 +42,7 @@ void RenderEngine::updateWindow()
     window->update();
 }
 
-void RenderEngine::loadLightData(ShaderProgram* shaderProgram) const
+void RenderEngine::loadLightData(const ShaderProgram* shaderProgram) const
 {
     shaderProgram->setUniform("light.position",  lightPosition.x, lightPosition.y, lightPosition.z);
     shaderProgram->setUniform("light.color", lightColor.x, lightColor.y, lightColor.z);
@@ -49,9 +52,10 @@ void RenderEngine::loadLightData(ShaderProgram* shaderProgram) const
     shaderProgram->setUniform("light.specular",  1.0f, 1.0f, 1.0f);
 }
 
-void RenderEngine::render(Object* object, ShaderProgram* shaderProgram)
+void RenderEngine::render(Object* object, int shaderKey)
 {
     // set objects shader to use
+    const ShaderProgram* shaderProgram = shaderManager->getShader(shaderKey);
     shaderProgram->use();
 
     // Load uniforms
@@ -70,8 +74,10 @@ void RenderEngine::render(Object* object, ShaderProgram* shaderProgram)
     object->render(shaderProgram);
 }
 
-void RenderEngine::renderLight(Object *object, ShaderProgram *shaderProgram)
+void RenderEngine::renderLight(Object *object, int shaderKey)
 {
+    const ShaderProgram* shaderProgram = shaderManager->getShader(shaderKey);
+
     shaderProgram->use();
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, lightPosition);
@@ -89,4 +95,9 @@ void RenderEngine::processInput()
 {
     window->processInput();
     camera->processInput(window);
+}
+
+void RenderEngine::loadShader(int key, const char *vertexShader, const char *fragmentShader)
+{
+    shaderManager->loadShader(key, vertexShader, fragmentShader);
 }

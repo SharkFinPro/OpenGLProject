@@ -16,7 +16,7 @@ public:
     Object(LightMaterial lightMaterial, VAO* vao);
 
     //void render() const;
-    void render(ShaderProgram* shaderProgram) const;
+    void render(const ShaderProgram* shaderProgram) const;
 };
 
 /*class Object {

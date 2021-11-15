@@ -50,8 +50,8 @@ int main()
     auto engine = new RenderEngine();
 
     /* Load Shaders */
-    auto cubeShader = new ShaderProgram("source/shaders/cube/cube.vert", "source/shaders/cube/cube.frag");
-    auto lightCubeShader = new ShaderProgram("source/shaders/light objects/light.vert", "source/shaders/light objects/light.frag");
+    engine->loadShader(0, "source/shaders/cube/cube.vert", "source/shaders/cube/cube.frag");
+    engine->loadShader(1, "source/shaders/light objects/light.vert", "source/shaders/light objects/light.frag");
 
     /* Create Graphics */
     auto cubeVAO = new VAO(true, false);
@@ -60,11 +60,6 @@ int main()
     cubeVAO->addAttribute(1, 3, 6, 3);
 
     auto cube = new Object({ 0.4f, 0.75f, 0.5f, 32.0f}, cubeVAO);
-
-    auto lightCubeVAO = new VAO(true, false);
-    lightCubeVAO->loadVBO(vertices, sizeof(vertices), 36);
-    lightCubeVAO->addAttribute(0, 3, 6, 0);
-
     auto lightCube = new Object({ 1.0f, 0.0f, 0.0f, 0.0f}, cubeVAO);
 
     /* Main loop */
@@ -78,19 +73,16 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Render
-        engine->render(cube, cubeShader);
+        engine->render(cube, 0);
 
-        engine->renderLight(lightCube, lightCubeShader);
+        engine->renderLight(lightCube, 1);
 
         // update window
         engine->updateWindow();
     }
 
     /* Cleanup & Exit */
-    delete cubeShader;
-    delete lightCubeShader;
     delete cubeVAO;
-    delete lightCubeVAO;
     delete cube;
     delete lightCube;
     delete engine;

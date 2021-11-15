@@ -12,7 +12,7 @@ Object::Object(LightMaterial lightMaterial, VAO* vao)
 }*/
 
 
-void Object::render(ShaderProgram* shaderProgram) const
+void Object::render(const ShaderProgram* shaderProgram) const
 {
     // Set uniforms
     glm::vec3 c = glm::vec3(1.0f, 0.5f, 0.31f);
