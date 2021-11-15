@@ -32,16 +32,6 @@ RenderEngine::~RenderEngine()
     glfwTerminate();
 }
 
-bool RenderEngine::windowShouldClose()
-{
-    return window->shouldClose();
-}
-
-void RenderEngine::updateWindow()
-{
-    window->update();
-}
-
 void RenderEngine::loadLightData(const ShaderProgram* shaderProgram) const
 {
     shaderProgram->setUniform("light.position",  lightPosition.x, lightPosition.y, lightPosition.z);
@@ -52,7 +42,7 @@ void RenderEngine::loadLightData(const ShaderProgram* shaderProgram) const
     shaderProgram->setUniform("light.specular",  1.0f, 1.0f, 1.0f);
 }
 
-void RenderEngine::render(Object* object, int shaderKey)
+void RenderEngine::renderObject(Object* object, int shaderKey) const
 {
     // set objects shader to use
     const ShaderProgram* shaderProgram = shaderManager->getShader(shaderKey);
@@ -74,7 +64,7 @@ void RenderEngine::render(Object* object, int shaderKey)
     object->render(shaderProgram);
 }
 
-void RenderEngine::renderLight(Object *object, int shaderKey)
+void RenderEngine::renderLight(Object *object, int shaderKey) const
 {
     const ShaderProgram* shaderProgram = shaderManager->getShader(shaderKey);
 
@@ -91,13 +81,41 @@ void RenderEngine::renderLight(Object *object, int shaderKey)
     object->render(shaderProgram);
 }
 
-void RenderEngine::processInput()
+void RenderEngine::render()
 {
-    window->processInput();
-    camera->processInput(window);
+    while (!window->shouldClose())
+    {
+        // Input
+        window->processInput();
+        camera->processInput(window);
+
+        // Clear canvas
+        glClearColor(skyColor.x, skyColor.y, skyColor.z, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // Render
+        for (auto &object : objects)
+            renderObject(object.first, object.second);
+
+        for (auto &light : lights)
+            renderLight(light.first, light.second);
+
+        // Update window
+        window->update();
+    }
 }
 
 void RenderEngine::loadShader(int key, const char *vertexShader, const char *fragmentShader)
 {
     shaderManager->loadShader(key, vertexShader, fragmentShader);
+}
+
+void RenderEngine::loadObject(Object *object, int shaderKey)
+{
+    objects.emplace_back(std::make_pair(object, shaderKey));
+}
+
+void RenderEngine::loadLight(Object *object, int shaderKey)
+{
+    lights.emplace_back(std::make_pair(object, shaderKey));
 }

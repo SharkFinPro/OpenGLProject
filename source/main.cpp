@@ -46,7 +46,7 @@ float vertices[] = {
 
 int main()
 {
-    /* Render Engine */
+    /* Create Engine */
     auto engine = new RenderEngine();
 
     /* Load Shaders */
@@ -62,24 +62,11 @@ int main()
     auto cube = new Object({ 0.4f, 0.75f, 0.5f, 32.0f}, cubeVAO);
     auto lightCube = new Object({ 1.0f, 0.0f, 0.0f, 0.0f}, cubeVAO);
 
-    /* Main loop */
-    while (!engine->windowShouldClose())
-    {
-        // Input
-        engine->processInput();
+    engine->loadObject(cube, 0);
+    engine->loadLight(lightCube, 1);
 
-        // Clear canvas
-        glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        // Render
-        engine->render(cube, 0);
-
-        engine->renderLight(lightCube, 1);
-
-        // update window
-        engine->updateWindow();
-    }
+    /* Render Loop */
+    engine->render();
 
     /* Cleanup & Exit */
     delete cubeVAO;
