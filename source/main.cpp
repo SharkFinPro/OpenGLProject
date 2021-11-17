@@ -64,7 +64,7 @@ int main()
     auto cube = std::make_shared<Object>(cubeMaterial, cubeVAO);
 
     LightMaterial lightCubeMaterial = { 1.0f, 0.0f, 0.0f, 0.0f};
-    auto lightCube = std::make_shared<Object>(lightCubeMaterial, cubeVAO);
+    auto lightCube = std::make_shared<LightObject>(cubeVAO, lightCubeMaterial, glm::vec3(1.2f, 1.0f, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
 
     // Load Objects
     engine->loadObject(cube, 0);

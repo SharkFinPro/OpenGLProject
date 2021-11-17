@@ -31,6 +31,8 @@ RenderEngine::~RenderEngine()
 
 void RenderEngine::loadLightData(std::shared_ptr<ShaderProgram> shaderProgram) const
 {
+    glm::vec3 lightPosition = light->getPosition();
+    glm::vec3 lightColor = light->getColor();
     shaderProgram->setUniform("light.position",  lightPosition.x, lightPosition.y, lightPosition.z);
     shaderProgram->setUniform("light.color", lightColor.x, lightColor.y, lightColor.z);
 
@@ -61,14 +63,13 @@ void RenderEngine::renderObject(std::shared_ptr<Object> object, int shaderKey) c
     object->render(shaderProgram);
 }
 
-void RenderEngine::renderLight(std::shared_ptr<Object> object, int shaderKey) const
+void RenderEngine::renderLight(std::shared_ptr<LightObject> object, int shaderKey) const
 {
-//    const ShaderProgram* shaderProgram = shaderManager->getShader(shaderKey);
     auto shaderProgram = shaderManager->getShader(shaderKey);
 
     shaderProgram->use();
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, lightPosition);
+    model = glm::translate(model, light->getPosition());
     model = glm::scale(model, glm::vec3(0.2f));
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
 
@@ -113,7 +114,8 @@ void RenderEngine::loadObject(std::shared_ptr<Object> object, int shaderKey)
     objects.emplace_back(std::make_pair(object, shaderKey));
 }
 
-void RenderEngine::loadLight(std::shared_ptr<Object> object, int shaderKey)
+void RenderEngine::loadLight(std::shared_ptr<LightObject> object, int shaderKey)
 {
     lights.emplace_back(std::make_pair(object, shaderKey));
+    light = object;
 }
