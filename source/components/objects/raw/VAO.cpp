@@ -1,32 +1,26 @@
 #include "VAO.h"
 #include <glad/glad.h>
+#include <iostream>
 
 VAO::VAO(bool useVBO, bool useEBO)
 {
     if (useVBO)
-        vbo = new VBO();
+        vbo = std::make_shared<VBO>();
 
     if (useEBO)
-        ebo = new EBO();
+        ebo = std::make_shared<EBO>();
 
     glGenVertexArrays(1, &id);
 }
 
 VAO::~VAO()
 {
-    delete vbo;
-    delete ebo;
     glDeleteVertexArrays(1, &id);
 }
 
 void VAO::bind() const
 {
     glBindVertexArray(id);
-}
-
-void VAO::unbind()
-{
-    glBindVertexArray(0);
 }
 
 void VAO::addAttribute(int index, int size, int stride, int distance) const

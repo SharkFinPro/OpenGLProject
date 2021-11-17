@@ -5,33 +5,18 @@
 #include "../ShaderProgram.h"
 #include "lighting/LightMaterial.h"
 #include "raw/VAO.h"
+#include <memory>
 
 class Object : public RawObject {
 private:
     LightMaterial lightMaterial;
-
-    VAO* vao;
+    std::shared_ptr<VAO> vao;
 
 public:
-    Object(LightMaterial lightMaterial, VAO* vao);
+    Object(LightMaterial lightMaterial, std::shared_ptr<VAO> vao);
 
-    //void render() const;
-    void render(const ShaderProgram* shaderProgram) const;
+    void render(std::shared_ptr<ShaderProgram> shaderProgram) const;
 };
-
-/*class Object {
-private:
-    VAO* vao;
-    Texture* texture;
-
-    LightMaterial lightMaterial;
-
-public:
-    Object(LightMaterial lightMaterial, VAO* vao, Texture* texture = nullptr);
-    ~Object();
-
-    void render(ShaderProgram* shaderProgram) const;
-};*/
 
 
 #endif //OPENGLPROJECT_OBJECT_H

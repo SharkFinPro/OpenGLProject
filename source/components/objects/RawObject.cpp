@@ -1,15 +1,9 @@
 #include "RawObject.h"
 
-RawObject::RawObject(VAO *vao, Texture *texture)
+RawObject::RawObject(std::shared_ptr<VAO> vao, std::shared_ptr<Texture> texture)
     : vao(vao), texture(texture)
 {
 
-}
-
-RawObject::~RawObject()
-{
-    delete vao;
-    delete texture;
 }
 
 void RawObject::render() const

@@ -6,24 +6,25 @@
 #include "components/objects/Object.h"
 #include "components/ShaderManager.h"
 #include <vector>
+#include <memory>
 
 class RenderEngine {
 private:
-    Window* window;
-    Camera* camera;
-    ShaderManager* shaderManager;
+    std::shared_ptr<Window> window;
+    std::unique_ptr<Camera> camera;
+    std::unique_ptr<ShaderManager> shaderManager;
 
-    std::vector<std::pair<Object*, int>> objects;
-    std::vector<std::pair<Object*, int>> lights;
+    std::vector<std::pair<std::shared_ptr<Object>, int>> objects;
+    std::vector<std::pair<std::shared_ptr<Object>, int>> lights;
 
     glm::vec3 lightPosition = glm::vec3(1.2f, 1.0f, -1.0f);
     glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
     glm::vec3 skyColor = glm::vec3(0.2f, 0.2f, 0.2f);
 
-    void loadLightData(const ShaderProgram* shaderProgram) const;
+    void loadLightData(std::shared_ptr<ShaderProgram> shaderProgram) const;
 
-    void renderObject(Object* object, int shaderKey) const;
-    void renderLight(Object* object, int shaderKey) const;
+    void renderObject(std::shared_ptr<Object> object, int shaderKey) const;
+    void renderLight(std::shared_ptr<Object> object, int shaderKey) const;
 
 public:
     RenderEngine();
@@ -33,8 +34,8 @@ public:
 
     void loadShader(int key, const char* vertexShader, const char* fragmentShader);
 
-    void loadObject(Object* object, int shaderKey);
-    void loadLight(Object* object, int shaderKey);
+    void loadObject(std::shared_ptr<Object> object, int shaderKey);
+    void loadLight(std::shared_ptr<Object> object, int shaderKey);
 };
 
 

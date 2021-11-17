@@ -3,18 +3,16 @@
 
 #include <map>
 #include "ShaderProgram.h"
+#include <memory>
 
 class ShaderManager {
 private:
-    std::map<int, ShaderProgram*> shaders;
+    std::map<int, std::shared_ptr<ShaderProgram>> shaders;
 
 public:
-    ShaderManager();
-    ~ShaderManager();
-
     void loadShader(int key, const char* vertexShader, const char* fragmentShader);
 
-    const ShaderProgram* getShader(int key) const;
+    std::shared_ptr<ShaderProgram> getShader(int key) const;
 };
 
 

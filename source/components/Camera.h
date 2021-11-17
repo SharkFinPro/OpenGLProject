@@ -3,6 +3,7 @@
 
 #include "Window.h"
 #include <glm/glm.hpp>
+#include <memory>
 
 class Camera {
 private:
@@ -20,7 +21,7 @@ public:
     [[nodiscard]] glm::mat4 getViewMatrix();
     [[nodiscard]] glm::vec3 getPosition();
 
-    void processInput(Window* window);
+    void processInput(std::shared_ptr<Window> window);
 };
 
 

@@ -3,15 +3,15 @@
 
 #include "raw/VAO.h"
 #include "textures/Texture.h"
+#include <memory>
 
 class RawObject {
 private:
-    VAO* vao;
-    Texture* texture;
+    std::shared_ptr<VAO> vao;
+    std::shared_ptr<Texture> texture;
 
 public:
-    explicit RawObject(VAO* vao, Texture* texture = nullptr);
-    ~RawObject();
+    explicit RawObject(std::shared_ptr<VAO> vao, std::shared_ptr<Texture> texture = {});
 
     void render() const;
 };

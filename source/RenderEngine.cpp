@@ -8,7 +8,7 @@ RenderEngine::RenderEngine()
         throw std::runtime_error("Failed to initialize GLFW");
 
     /* Create Window */
-    window = new Window(800, 600, "Learn OpenGL", false);
+    window = std::make_shared<Window>(800, 600, "Learn OpenGL", false);
     window->makeCurrentContext();
 
     /* Load GLAD */
@@ -18,21 +18,18 @@ RenderEngine::RenderEngine()
     glEnable(GL_DEPTH_TEST);
 
     /* Camera */
-    camera = new Camera(glm::vec3(0.0f, 0.0f, -5.0f));
+    camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, -5.0f));
 
     /* Shader Manager */
-    shaderManager = new ShaderManager();
+    shaderManager = std::make_unique<ShaderManager>();
 }
 
 RenderEngine::~RenderEngine()
 {
-    delete window;
-    delete camera;
-
     glfwTerminate();
 }
 
-void RenderEngine::loadLightData(const ShaderProgram* shaderProgram) const
+void RenderEngine::loadLightData(std::shared_ptr<ShaderProgram> shaderProgram) const
 {
     shaderProgram->setUniform("light.position",  lightPosition.x, lightPosition.y, lightPosition.z);
     shaderProgram->setUniform("light.color", lightColor.x, lightColor.y, lightColor.z);
@@ -42,10 +39,10 @@ void RenderEngine::loadLightData(const ShaderProgram* shaderProgram) const
     shaderProgram->setUniform("light.specular",  1.0f, 1.0f, 1.0f);
 }
 
-void RenderEngine::renderObject(Object* object, int shaderKey) const
+void RenderEngine::renderObject(std::shared_ptr<Object> object, int shaderKey) const
 {
     // set objects shader to use
-    const ShaderProgram* shaderProgram = shaderManager->getShader(shaderKey);
+    auto shaderProgram = shaderManager->getShader(shaderKey);
     shaderProgram->use();
 
     // Load uniforms
@@ -64,9 +61,10 @@ void RenderEngine::renderObject(Object* object, int shaderKey) const
     object->render(shaderProgram);
 }
 
-void RenderEngine::renderLight(Object *object, int shaderKey) const
+void RenderEngine::renderLight(std::shared_ptr<Object> object, int shaderKey) const
 {
-    const ShaderProgram* shaderProgram = shaderManager->getShader(shaderKey);
+//    const ShaderProgram* shaderProgram = shaderManager->getShader(shaderKey);
+    auto shaderProgram = shaderManager->getShader(shaderKey);
 
     shaderProgram->use();
     glm::mat4 model = glm::mat4(1.0f);
@@ -110,12 +108,12 @@ void RenderEngine::loadShader(int key, const char *vertexShader, const char *fra
     shaderManager->loadShader(key, vertexShader, fragmentShader);
 }
 
-void RenderEngine::loadObject(Object *object, int shaderKey)
+void RenderEngine::loadObject(std::shared_ptr<Object> object, int shaderKey)
 {
     objects.emplace_back(std::make_pair(object, shaderKey));
 }
 
-void RenderEngine::loadLight(Object *object, int shaderKey)
+void RenderEngine::loadLight(std::shared_ptr<Object> object, int shaderKey)
 {
     lights.emplace_back(std::make_pair(object, shaderKey));
 }

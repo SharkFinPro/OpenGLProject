@@ -3,14 +3,13 @@
 
 #include "EBO.h"
 #include "VBO.h"
+#include <memory>
 
 class VAO {
 private:
     unsigned int id{};
-    VBO* vbo = nullptr;
-    EBO* ebo = nullptr;
-
-    static void unbind();
+    std::shared_ptr<VBO> vbo;
+    std::shared_ptr<EBO> ebo;
 
 public:
     VAO(bool useVBO, bool useEBO);
