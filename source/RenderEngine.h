@@ -18,24 +18,23 @@ private:
     std::vector<std::pair<std::shared_ptr<Object>, int>> objects;
     std::vector<std::pair<std::shared_ptr<LightObject>, int>> lights;
 
-    std::shared_ptr<LightObject> light;
     glm::vec3 skyColor = glm::vec3(0.2f, 0.2f, 0.2f);
 
-    void loadLightData(std::shared_ptr<ShaderProgram> shaderProgram) const;
+    void loadLightData(const std::shared_ptr<ShaderProgram>& shaderProgram) const;
 
-    void renderObject(std::shared_ptr<Object> object, int shaderKey) const;
-    void renderLight(std::shared_ptr<LightObject> object, int shaderKey) const;
+    void renderObject(const std::shared_ptr<Object>& object, int shaderKey) const;
+    void renderLight(const std::shared_ptr<LightObject>& object, int shaderKey) const;
 
 public:
-    RenderEngine();
+    explicit RenderEngine(bool fullscreen = false);
     ~RenderEngine();
 
     void render();
 
     void loadShader(int key, const char* vertexShader, const char* fragmentShader);
 
-    void loadObject(std::shared_ptr<Object> object, int shaderKey);
-    void loadLight(std::shared_ptr<LightObject> object, int shaderKey);
+    void loadObject(const std::shared_ptr<Object>& object, int shaderKey);
+    void loadLight(const std::shared_ptr<LightObject>& object, int shaderKey);
 };
 
 

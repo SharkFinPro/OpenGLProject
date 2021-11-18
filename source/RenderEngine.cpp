@@ -1,14 +1,14 @@
 #include "RenderEngine.h"
 #include <stdexcept>
 
-RenderEngine::RenderEngine()
+RenderEngine::RenderEngine(bool fullscreen)
 {
     /* Initialize GLFW */
     if (!glfwInit())
         throw std::runtime_error("Failed to initialize GLFW");
 
     /* Create Window */
-    window = std::make_shared<Window>(800, 600, "Learn OpenGL", false);
+    window = std::make_shared<Window>(800, 600, "3D Rendering Engine", fullscreen);
     window->makeCurrentContext();
 
     /* Load GLAD */
@@ -29,10 +29,10 @@ RenderEngine::~RenderEngine()
     glfwTerminate();
 }
 
-void RenderEngine::loadLightData(std::shared_ptr<ShaderProgram> shaderProgram) const
+void RenderEngine::loadLightData(const std::shared_ptr<ShaderProgram>& shaderProgram) const
 {
-    glm::vec3 lightPosition = light->getPosition();
-    glm::vec3 lightColor = light->getColor();
+    glm::vec3 lightPosition = lights.front().first->getPosition();
+    glm::vec3 lightColor = lights.front().first->getColor();
     shaderProgram->setUniform("light.position",  lightPosition.x, lightPosition.y, lightPosition.z);
     shaderProgram->setUniform("light.color", lightColor.x, lightColor.y, lightColor.z);
 
@@ -41,7 +41,7 @@ void RenderEngine::loadLightData(std::shared_ptr<ShaderProgram> shaderProgram) c
     shaderProgram->setUniform("light.specular",  1.0f, 1.0f, 1.0f);
 }
 
-void RenderEngine::renderObject(std::shared_ptr<Object> object, int shaderKey) const
+void RenderEngine::renderObject(const std::shared_ptr<Object>& object, int shaderKey) const
 {
     // set objects shader to use
     auto shaderProgram = shaderManager->getShader(shaderKey);
@@ -63,13 +63,13 @@ void RenderEngine::renderObject(std::shared_ptr<Object> object, int shaderKey) c
     object->render(shaderProgram);
 }
 
-void RenderEngine::renderLight(std::shared_ptr<LightObject> object, int shaderKey) const
+void RenderEngine::renderLight(const std::shared_ptr<LightObject>& object, int shaderKey) const
 {
     auto shaderProgram = shaderManager->getShader(shaderKey);
 
     shaderProgram->use();
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, light->getPosition());
+    model = glm::translate(model, object->getPosition());
     model = glm::scale(model, glm::vec3(0.2f));
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
 
@@ -109,13 +109,12 @@ void RenderEngine::loadShader(int key, const char *vertexShader, const char *fra
     shaderManager->loadShader(key, vertexShader, fragmentShader);
 }
 
-void RenderEngine::loadObject(std::shared_ptr<Object> object, int shaderKey)
+void RenderEngine::loadObject(const std::shared_ptr<Object>& object, int shaderKey)
 {
     objects.emplace_back(std::make_pair(object, shaderKey));
 }
 
-void RenderEngine::loadLight(std::shared_ptr<LightObject> object, int shaderKey)
+void RenderEngine::loadLight(const std::shared_ptr<LightObject>& object, int shaderKey)
 {
     lights.emplace_back(std::make_pair(object, shaderKey));
-    light = object;
 }
