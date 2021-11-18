@@ -29,3 +29,6 @@ target_include_directories(${PROJECT_NAME} PUBLIC external/glm-0.9.9.8)
 
 #include stb
 target_include_directories(${PROJECT_NAME} PUBLIC external/stb/include)
+
+#include assimp
+target_include_directories(${PROJECT_NAME} PUBLIC external/assimp-5.0.1/include)
