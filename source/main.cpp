@@ -61,10 +61,10 @@ int main()
     cubeVAO->addAttribute(1, 3, 6, 3);
 
     LightMaterial cubeMaterial = { 0.4f, 0.75f, 0.5f, 32.0f};
-    auto cube = std::make_shared<Object>(cubeMaterial, cubeVAO, glm::vec3(0, 0, 0));
+    auto cube = std::make_shared<Object>(cubeMaterial, cubeVAO, glm::vec3(0, 0, 0), glm::vec3(0.2f, 0.5f, 0.75f));
 
     LightMaterial lightCubeMaterial = { 0.4f, 0.75f, 1.0f, 0.0f};
-    auto lightCube = std::make_shared<LightObject>(cubeVAO, lightCubeMaterial, glm::vec3(1.2f, 1.0f, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+    auto lightCube = std::make_shared<LightSource>(cubeVAO, lightCubeMaterial, glm::vec3(1.2f, 1.0f, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
 
     // Load Objects
     engine->loadObject(cube, 0);

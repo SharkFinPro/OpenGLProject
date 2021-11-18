@@ -4,7 +4,7 @@
 #include "components/Window.h"
 #include "components/Camera.h"
 #include "components/objects/Object.h"
-#include "components/objects/lighting/LightObject.h"
+#include "components/objects/lighting/LightSource.h"
 #include "components/ShaderManager.h"
 #include <vector>
 #include <memory>
@@ -16,14 +16,14 @@ private:
     std::unique_ptr<ShaderManager> shaderManager;
 
     std::vector<std::pair<std::shared_ptr<Object>, int>> objects;
-    std::vector<std::pair<std::shared_ptr<LightObject>, int>> lights;
+    std::vector<std::pair<std::shared_ptr<LightSource>, int>> lights;
 
     glm::vec3 skyColor = glm::vec3(0.2f, 0.2f, 0.2f);
 
     void loadLightData(const std::shared_ptr<ShaderProgram>& shaderProgram) const;
 
     void renderObject(const std::shared_ptr<Object>& object, int shaderKey) const;
-    void renderLight(const std::shared_ptr<LightObject>& object, int shaderKey) const;
+    void renderLight(const std::shared_ptr<LightSource>& object, int shaderKey) const;
 
 public:
     explicit RenderEngine(bool fullscreen = false);
@@ -34,7 +34,7 @@ public:
     void loadShader(int key, const char* vertexShader, const char* fragmentShader);
 
     void loadObject(const std::shared_ptr<Object>& object, int shaderKey);
-    void loadLight(const std::shared_ptr<LightObject>& object, int shaderKey);
+    void loadLight(const std::shared_ptr<LightSource>& object, int shaderKey);
 };
 
 

@@ -17,14 +17,14 @@ struct LightMaterial {
 class Object : public RawObject {
 private:
     LightMaterial lightMaterial;
-    std::shared_ptr<VAO> vao;
+    glm::vec3 color;
 
 public:
-    Object(LightMaterial lightMaterial, const std::shared_ptr<VAO>& vao, glm::vec3 position);
-
-    void render(std::shared_ptr<ShaderProgram> shaderProgram) const;
+    Object(LightMaterial lightMaterial, const std::shared_ptr<VAO>& vao, glm::vec3 position, glm::vec3 color);
 
     [[nodiscard]] LightMaterial getLightMaterial() const;
+
+    [[nodiscard]] glm::vec3 getColor() const;
 };
 
 

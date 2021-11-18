@@ -31,7 +31,7 @@ RenderEngine::~RenderEngine()
 
 void RenderEngine::loadLightData(const std::shared_ptr<ShaderProgram>& shaderProgram) const
 {
-    std::shared_ptr<LightObject> light = lights.front().first;
+    std::shared_ptr<LightSource> light = lights.front().first;
     LightMaterial lightMaterial = light->getLightMaterial();
 
     shaderProgram->setUniform("light.position",  light->getPosition());
@@ -51,8 +51,18 @@ void RenderEngine::renderObject(const std::shared_ptr<Object>& object, int shade
     loadLightData(shaderProgram);
     shaderProgram->setUniform("viewPos",  camera->getPosition().x, camera->getPosition().y, camera->getPosition().z);
 
+    // Lighting data
+    LightMaterial lightMaterial = object->getLightMaterial();
+    glm::vec3 diffuse = object->getColor() * lightMaterial.diffuse;
+    glm::vec3 ambient = diffuse * lightMaterial.ambient;
+    shaderProgram->setUniform("material.ambient", ambient.x, ambient.y, ambient.z);
+    shaderProgram->setUniform("material.diffuse", diffuse.x, diffuse.y, diffuse.z);
+    shaderProgram->setUniform("material.specular",  lightMaterial.specular, lightMaterial.specular, lightMaterial.specular);
+    shaderProgram->setUniform("material.shininess",  lightMaterial.shininess);
+
     // load object matrices
     glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, object->getPosition());
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
 
     shaderProgram->setUniform("model", model);
@@ -60,10 +70,10 @@ void RenderEngine::renderObject(const std::shared_ptr<Object>& object, int shade
     shaderProgram->setUniform("projection", projection);
 
     // render
-    object->render(shaderProgram);
+    object->render();
 }
 
-void RenderEngine::renderLight(const std::shared_ptr<LightObject>& object, int shaderKey) const
+void RenderEngine::renderLight(const std::shared_ptr<LightSource>& object, int shaderKey) const
 {
     auto shaderProgram = shaderManager->getShader(shaderKey);
 
@@ -77,7 +87,7 @@ void RenderEngine::renderLight(const std::shared_ptr<LightObject>& object, int s
     shaderProgram->setUniform("view", camera->getViewMatrix());
     shaderProgram->setUniform("projection", projection);
 
-    object->render(shaderProgram);
+    object->render();
 }
 
 void RenderEngine::render()
@@ -114,7 +124,7 @@ void RenderEngine::loadObject(const std::shared_ptr<Object>& object, int shaderK
     objects.emplace_back(std::make_pair(object, shaderKey));
 }
 
-void RenderEngine::loadLight(const std::shared_ptr<LightObject>& object, int shaderKey)
+void RenderEngine::loadLight(const std::shared_ptr<LightSource>& object, int shaderKey)
 {
     lights.emplace_back(std::make_pair(object, shaderKey));
 }
