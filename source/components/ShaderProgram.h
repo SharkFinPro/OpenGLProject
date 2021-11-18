@@ -20,6 +20,7 @@ public:
     void setUniform(const char* name, const glm::mat4& value) const;
 
     void setUniform(const char* name, const float& x, const float& y, const float& z) const;
+    void setUniform(const char* name, glm::vec3 vec3) const;
 };
 
 #endif //OPENGLPROJECT_SHADERPROGRAM_H

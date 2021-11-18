@@ -31,14 +31,14 @@ RenderEngine::~RenderEngine()
 
 void RenderEngine::loadLightData(const std::shared_ptr<ShaderProgram>& shaderProgram) const
 {
-    glm::vec3 lightPosition = lights.front().first->getPosition();
-    glm::vec3 lightColor = lights.front().first->getColor();
-    shaderProgram->setUniform("light.position",  lightPosition.x, lightPosition.y, lightPosition.z);
-    shaderProgram->setUniform("light.color", lightColor.x, lightColor.y, lightColor.z);
+    std::shared_ptr<LightObject> light = lights.front().first;
+    LightMaterial lightMaterial = light->getLightMaterial();
 
-    shaderProgram->setUniform("light.ambient",  0.4f, 0.4f, 0.4f);
-    shaderProgram->setUniform("light.diffuse",  0.75f, 0.75f, 0.75f);
-    shaderProgram->setUniform("light.specular",  1.0f, 1.0f, 1.0f);
+    shaderProgram->setUniform("light.position",  light->getPosition());
+    shaderProgram->setUniform("light.color", light->getColor());
+    shaderProgram->setUniform("light.ambient",  glm::vec3(lightMaterial.ambient));
+    shaderProgram->setUniform("light.diffuse",  glm::vec3(lightMaterial.diffuse));
+    shaderProgram->setUniform("light.specular",  glm::vec3(lightMaterial.specular));
 }
 
 void RenderEngine::renderObject(const std::shared_ptr<Object>& object, int shaderKey) const

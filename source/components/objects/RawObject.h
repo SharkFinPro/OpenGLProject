@@ -3,6 +3,7 @@
 
 #include "raw/VAO.h"
 #include "textures/Texture.h"
+#include <glm/vec3.hpp>
 #include <memory>
 
 class RawObject {
@@ -10,10 +11,14 @@ private:
     std::shared_ptr<VAO> vao;
     std::shared_ptr<Texture> texture;
 
+    glm::vec3 position;
+
 public:
-    explicit RawObject(std::shared_ptr<VAO> vao, std::shared_ptr<Texture> texture = {});
+    RawObject(glm::vec3 position, std::shared_ptr<VAO> vao, std::shared_ptr<Texture> texture = {});
 
     void render() const;
+
+    [[nodiscard]] glm::vec3 getPosition() const;
 };
 
 

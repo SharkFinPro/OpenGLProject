@@ -1,7 +1,7 @@
 #include "Object.h"
 
-Object::Object(LightMaterial lightMaterial, std::shared_ptr<VAO> vao)
-    : RawObject(vao), lightMaterial(lightMaterial), vao(vao)
+Object::Object(LightMaterial lightMaterial, const std::shared_ptr<VAO>& vao, glm::vec3 position)
+    : RawObject(position, vao), lightMaterial(lightMaterial), vao(vao)
 {
 
 }
@@ -19,4 +19,9 @@ void Object::render(std::shared_ptr<ShaderProgram> shaderProgram) const
 
     // Draw the VAO
     vao->draw();
+}
+
+LightMaterial Object::getLightMaterial() const
+{
+    return lightMaterial;
 }
