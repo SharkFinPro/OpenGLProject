@@ -23,6 +23,12 @@ void VBO::load(float vertices[], int verticesSize, unsigned int verticesCount)
     glBufferData(GL_ARRAY_BUFFER, verticesSize, vertices, GL_STATIC_DRAW);
 }
 
+void VBO::load(std::vector<Vertex_> &vertices)
+{
+    bind();
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex_), &vertices[0], GL_STATIC_DRAW);
+}
+
 unsigned int VBO::getVerticesCount() const
 {
     return verticesCount;

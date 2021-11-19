@@ -36,6 +36,12 @@ void VAO::loadVBO(float *vertices, int verticesSize, unsigned int verticesCount)
     vbo->load(vertices, verticesSize, verticesCount);
 }
 
+void VAO::loadVBO(std::vector<Vertex_> &vertices)
+{
+    bind();
+    vbo->load(vertices);
+}
+
 void VAO::loadEBO(unsigned int *indices, int indicesSize, unsigned int triangles)
 {
     bind();
