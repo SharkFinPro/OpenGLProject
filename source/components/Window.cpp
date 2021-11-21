@@ -6,6 +6,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glfwMakeContextCurrent(window);
     glViewport(0, 0, width, height);
 }
+
 Window::Window(int width, int height, const char *name, bool fullscreen) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
