@@ -1,26 +1,3 @@
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
-#include <iostream>
-
-int main()
-{
-    Assimp::Importer importer;
-    const aiScene* scene = importer.ReadFile("source/images/cube.obj", aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
-    // check for errors
-    if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
-    {
-        std::cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << std::endl;
-        return -1;
-    }
-
-    std::cout << "hi there!" << std::endl;
-
-    return 0;
-}
-
-/*
 #include "RenderEngine.h"
 #include <memory>
 
@@ -70,14 +47,14 @@ float vertices[] = {
 
 int main()
 {
-    /* Create Engine *
+    /* Create Engine */
     auto engine = std::make_unique<RenderEngine>();
 
     // Load Shaders
     engine->loadShader(0, "source/shaders/cube/cube.vert", "source/shaders/cube/cube.frag");
     engine->loadShader(1, "source/shaders/light objects/light.vert", "source/shaders/light objects/light.frag");
 
-    /* Create Graphics *
+    /* Create Graphics */
     auto cubeVAO = std::make_shared<VAO>(true, false);
     cubeVAO->loadVBO(vertices, sizeof(vertices), 36);
     cubeVAO->addAttribute(0, 3, 6, 0);
@@ -95,8 +72,8 @@ int main()
     engine->loadObject(cube2, 0);
     engine->loadLight(lightCube, 1);
 
-    /* Render Loop *
+    /* Render Loop */
     engine->render();
 
     return 0;
-}*/
+}
