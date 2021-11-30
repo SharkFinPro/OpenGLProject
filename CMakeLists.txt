@@ -34,5 +34,5 @@ target_include_directories(${PROJECT_NAME} PUBLIC external/glm-0.9.9.8)
 target_include_directories(${PROJECT_NAME} PUBLIC external/stb/include)
 
 #include assimp
-target_link_libraries(${PROJECT_NAME} assimpd)
+target_link_libraries(${PROJECT_NAME} assimp)
 target_include_directories(${PROJECT_NAME} PUBLIC external/assimp-5.1.2/include)

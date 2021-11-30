@@ -48,11 +48,11 @@ float vertices[] = {
 int main()
 {
     /* Create Engine */
-    auto engine = std::make_unique<RenderEngine>();
+    RenderEngine engine = RenderEngine();
 
     // Load Shaders
-    engine->loadShader(0, "source/shaders/cube/cube.vert", "source/shaders/cube/cube.frag");
-    engine->loadShader(1, "source/shaders/light objects/light.vert", "source/shaders/light objects/light.frag");
+    engine.loadShader(0, "source/shaders/cube/cube.vert", "source/shaders/cube/cube.frag");
+    engine.loadShader(1, "source/shaders/light objects/light.vert", "source/shaders/light objects/light.frag");
 
     /* Create Graphics */
     auto cubeVAO = std::make_shared<VAO>(true, false);
@@ -68,12 +68,12 @@ int main()
     auto lightCube = std::make_shared<LightSource>(cubeVAO, lightCubeMaterial, glm::vec3(1.2f, 1.0f, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
 
     // Load Objects
-    engine->loadObject(cube, 0);
-    engine->loadObject(cube2, 0);
-    engine->loadLight(lightCube, 1);
+    engine.loadObject(cube, 0);
+    engine.loadObject(cube2, 0);
+    engine.loadLight(lightCube, 1);
 
     /* Render Loop */
-    engine->render();
+    engine.render();
 
     return 0;
 }
