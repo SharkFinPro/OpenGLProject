@@ -24,7 +24,7 @@ target_link_libraries(${PROJECT_NAME} OpenGL::GL)
 target_include_directories(${PROJECT_NAME} PUBLIC external/glad/include)
 
 #include GLM
-target_include_directories(${PROJECT_NAME} PUBLIC external/glm-0.9.9.8)
+target_include_directories(${PROJECT_NAME} PUBLIC external/glm-0.9.9.8/include)
 
 #include stb
 target_include_directories(${PROJECT_NAME} PUBLIC external/stb/include)
