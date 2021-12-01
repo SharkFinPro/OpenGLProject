@@ -51,8 +51,8 @@ int main()
     RenderEngine engine = RenderEngine();
 
     // Load Shaders
-    engine.loadShader(0, "source/shaders/cube/cube.vert", "source/shaders/cube/cube.frag");
-    engine.loadShader(1, "source/shaders/light objects/light.vert", "source/shaders/light objects/light.frag");
+    engine.loadShader(0, "assets/shaders/cube/cube.vert", "assets/shaders/cube/cube.frag");
+    engine.loadShader(1, "assets/shaders/light objects/light.vert", "assets/shaders/light objects/light.frag");
 
     /* Create Graphics */
     auto cubeVAO = std::make_shared<VAO>(true, false);

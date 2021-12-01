@@ -8,10 +8,10 @@
 
 class RawObject {
 private:
+    glm::vec3 position;
+
     std::shared_ptr<VAO> vao;
     std::shared_ptr<Texture> texture;
-
-    glm::vec3 position;
 
 public:
     RawObject(glm::vec3 position, std::shared_ptr<VAO> vao, std::shared_ptr<Texture> texture = {});
