@@ -4,7 +4,6 @@
 #include "EBO.h"
 #include "VBO.h"
 #include <memory>
-#include "../../model loading/StructData.h"
 #include <vector>
 
 class VAO {
@@ -20,8 +19,7 @@ public:
     void bind() const;
 
     void loadVBO(float vertices[], int verticesSize, unsigned int verticesCount = {});
-    void loadVBO(std::vector<Vertex_>& vertices);
-    void loadEBO(unsigned int indices[], int indicesSize, unsigned int triangles);
+    [[maybe_unused]] void loadEBO(unsigned int indices[], int indicesSize, unsigned int triangles);
     void addAttribute(int index, int size, int stride, int distance) const;
 
     void draw() const;

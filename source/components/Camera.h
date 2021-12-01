@@ -21,7 +21,7 @@ public:
     [[nodiscard]] glm::mat4 getViewMatrix();
     [[nodiscard]] glm::vec3 getPosition();
 
-    void processInput(std::shared_ptr<Window> window);
+    void processInput(const std::shared_ptr<Window>& window);
 };
 
 

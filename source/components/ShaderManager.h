@@ -12,7 +12,7 @@ private:
 public:
     void loadShader(int key, const char* vertexShader, const char* fragmentShader);
 
-    std::shared_ptr<ShaderProgram> getShader(int key) const;
+    [[nodiscard]] std::shared_ptr<ShaderProgram> getShader(int key) const;
 };
 
 

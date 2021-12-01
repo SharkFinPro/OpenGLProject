@@ -74,6 +74,4 @@ int main()
 
     /* Render Loop */
     engine.render();
-
-    return 0;
 }

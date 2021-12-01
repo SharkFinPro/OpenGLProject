@@ -17,7 +17,7 @@ glm::vec3 Camera::getPosition()
     return position;
 }
 
-void Camera::processInput(std::shared_ptr<Window> window)
+void Camera::processInput(const std::shared_ptr<Window>& window)
 {
     float cameraSpeed = speed * window->getDeltaTime();
 
