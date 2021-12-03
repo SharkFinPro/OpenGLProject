@@ -12,7 +12,7 @@ AssimpScene::AssimpScene(std::shared_ptr<RenderEngine> engine)
 {
     /* load model with assimp */
     Assimp::Importer importer;
-    const aiScene* scene = importer.ReadFile("assets/images/cube.obj", aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+    const aiScene* scene = importer.ReadFile("assets/objects/cube.obj", aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
     // Check for errors
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
