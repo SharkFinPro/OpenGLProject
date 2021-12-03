@@ -46,9 +46,9 @@ AssimpScene::AssimpScene(std::shared_ptr<RenderEngine> engine)
         }
     }
 
-    cubeVAO = std::make_shared<VAO>(true, false);
+    cubeVAO = std::make_shared<VAO>(true, true);
     cubeVAO->loadVBO(vertices.data(), static_cast<int>(vertices.size() * sizeof(float)), vertices.size());
-//    cubeVAO->loadEBO(indices.data(), static_cast<int>(indices.size() * sizeof(unsigned int)), mesh->mNumFaces);
+    cubeVAO->loadEBO(indices.data(), static_cast<int>(indices.size() * sizeof(unsigned int)), indices.size());
     // positions
     cubeVAO->addAttribute(0, 3, 6, 0);
     // normals
