@@ -31,6 +31,10 @@ AssimpScene::AssimpScene(std::shared_ptr<RenderEngine> engine)
         vertices.push_back(mesh->mVertices[i].x);
         vertices.push_back(mesh->mVertices[i].y);
         vertices.push_back(mesh->mVertices[i].z);
+
+        vertices.push_back(mesh->mNormals[i].x);
+        vertices.push_back(mesh->mNormals[i].y);
+        vertices.push_back(mesh->mNormals[i].z);
     }
 
     for (unsigned int i = 0; i < mesh->mNumFaces; i++)
@@ -42,10 +46,13 @@ AssimpScene::AssimpScene(std::shared_ptr<RenderEngine> engine)
         }
     }
 
-    cubeVAO = std::make_shared<VAO>(true, true);
-    cubeVAO->loadVBO(vertices.data(), sizeof(vertices.data()), vertices.size());
-    cubeVAO->loadEBO(indices.data(), sizeof(indices.data()), mesh->mNumFaces);
+    cubeVAO = std::make_shared<VAO>(true, false);
+    cubeVAO->loadVBO(vertices.data(), static_cast<int>(vertices.size() * sizeof(float)), vertices.size());
+//    cubeVAO->loadEBO(indices.data(), static_cast<int>(indices.size() * sizeof(unsigned int)), mesh->mNumFaces);
+    // positions
     cubeVAO->addAttribute(0, 3, 6, 0);
+    // normals
+    cubeVAO->addAttribute(1, 3, 6, 3);
 
     // Load Shaders
     renderEngine->loadShader(0, "assets/shaders/cube/cube.vert", "assets/shaders/cube/cube.frag");

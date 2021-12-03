@@ -5,7 +5,7 @@
 int main()
 {
     /* Create Engine */
-    auto engine = std::make_shared<RenderEngine>(true);
+    auto engine = std::make_shared<RenderEngine>();
 
     AssimpScene scene(engine);
 
