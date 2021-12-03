@@ -1,77 +1,19 @@
 #include "RenderEngine.h"
+#include "scenes/Scene1.h"
 #include <memory>
-
-float vertices[] = {
-    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-    0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-    0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-    0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-
-    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-    0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-    0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-    0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-
-    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-    -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-    -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-    -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-    -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-
-    0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-    0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-    0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-    0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-    0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-    0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-
-    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-    0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-    0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-    0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-
-    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-    0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-    0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-    0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
-};
 
 int main()
 {
     /* Create Engine */
-    RenderEngine engine = RenderEngine();
+    auto engine = std::make_shared<RenderEngine>(true);
 
-    // Load Shaders
-    engine.loadShader(0, "assets/shaders/cube/cube.vert", "assets/shaders/cube/cube.frag");
-    engine.loadShader(1, "assets/shaders/light objects/light.vert", "assets/shaders/light objects/light.frag");
-
-    /* Create Graphics */
-    auto cubeVAO = std::make_shared<VAO>(true, false);
-    cubeVAO->loadVBO(vertices, sizeof(vertices), 36);
-    cubeVAO->addAttribute(0, 3, 6, 0);
-    cubeVAO->addAttribute(1, 3, 6, 3);
-
-    LightMaterial cubeMaterial = { 0.4f, 0.75f, 0.5f, 32.0f};
-    auto cube = std::make_shared<Object>(cubeMaterial, cubeVAO, glm::vec3(0, 0, 0), glm::vec3(0.9f, 0.5f, 0.75f));
-    auto cube2 = std::make_shared<Object>(cubeMaterial, cubeVAO, glm::vec3(-3, 1, 0), glm::vec3(0.2f, 0.5f, 0.75f));
-
-    LightMaterial lightCubeMaterial = { 0.4f, 0.75f, 1.0f, 0.0f};
-    auto lightCube = std::make_shared<LightSource>(cubeVAO, lightCubeMaterial, glm::vec3(1.2f, 1.0f, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
-
-    // Load Objects
-    engine.loadObject(cube, 0);
-    engine.loadObject(cube2, 0);
-    engine.loadLight(lightCube, 1);
+    Scene1 scene1(engine);
 
     /* Render Loop */
-    engine.render();
+    while (!engine->shouldClose())
+    {
+        scene1.update();
+
+        engine->render();
+    }
 }

@@ -19,6 +19,8 @@ public:
     void render() const;
 
     [[nodiscard]] glm::vec3 getPosition() const;
+
+    void move(glm::vec3 change);
 };
 
 

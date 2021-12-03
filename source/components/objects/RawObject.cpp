@@ -15,3 +15,8 @@ glm::vec3 RawObject::getPosition() const
 {
     return position;
 }
+
+void RawObject::move(glm::vec3 change)
+{
+    position += change;
+}

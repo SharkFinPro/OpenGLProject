@@ -20,6 +20,8 @@ private:
 
     glm::vec3 skyColor = glm::vec3(0.2f, 0.2f, 0.2f);
 
+    bool closing = false;
+
     void loadLightData(const std::shared_ptr<ShaderProgram>& shaderProgram) const;
 
     void renderObject(const std::shared_ptr<Object>& object, int shaderKey) const;
@@ -35,6 +37,8 @@ public:
 
     void loadObject(const std::shared_ptr<Object>& object, int shaderKey);
     void loadLight(const std::shared_ptr<LightSource>& object, int shaderKey);
+
+    [[nodiscard]] bool shouldClose() const;
 };
 
 

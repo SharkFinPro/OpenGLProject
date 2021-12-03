@@ -92,26 +92,29 @@ void RenderEngine::renderLight(const std::shared_ptr<LightSource>& object, int s
 
 void RenderEngine::render()
 {
-    while (!window->shouldClose())
+    if (window->shouldClose())
     {
-        // Input
-        window->processInput();
-        camera->processInput(window);
-
-        // Clear canvas
-        glClearColor(skyColor.x, skyColor.y, skyColor.z, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        // Render
-        for (auto &object : objects)
-            renderObject(object.first, object.second);
-
-        for (auto &light : lights)
-            renderLight(light.first, light.second);
-
-        // Update window
-        window->update();
+        closing = true;
+        return;
     }
+
+    // Input
+    window->processInput();
+    camera->processInput(window);
+
+    // Clear canvas
+    glClearColor(skyColor.x, skyColor.y, skyColor.z, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Render
+    for (auto &object : objects)
+        renderObject(object.first, object.second);
+
+    for (auto &light : lights)
+        renderLight(light.first, light.second);
+
+    // Update window
+    window->update();
 }
 
 void RenderEngine::loadShader(int key, const char *vertexShader, const char *fragmentShader)
@@ -127,4 +130,9 @@ void RenderEngine::loadObject(const std::shared_ptr<Object>& object, int shaderK
 void RenderEngine::loadLight(const std::shared_ptr<LightSource>& object, int shaderKey)
 {
     lights.emplace_back(std::make_pair(object, shaderKey));
+}
+
+bool RenderEngine::shouldClose() const
+{
+    return closing;
 }
