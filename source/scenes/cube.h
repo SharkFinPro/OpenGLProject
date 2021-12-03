@@ -1,7 +1,7 @@
 #ifndef OPENGLPROJECT_CUBE_H
 #define OPENGLPROJECT_CUBE_H
 
-float vertices[] = {
+float cubeVertices[] = {
         -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
         0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,

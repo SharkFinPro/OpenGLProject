@@ -1,9 +1,9 @@
-#ifndef OPENGLPROJECT_SCENE1_H
-#define OPENGLPROJECT_SCENE1_H
+#ifndef OPENGLPROJECT_ASSIMPSCENE_H
+#define OPENGLPROJECT_ASSIMPSCENE_H
 
 #include "../RenderEngine.h"
 
-class Scene1 {
+class AssimpScene {
 private:
     std::shared_ptr<RenderEngine> renderEngine;
 
@@ -14,13 +14,11 @@ private:
 
     std::shared_ptr<LightSource> lightCube;
 
-    float pos = 0;
-
 public:
-    explicit Scene1(std::shared_ptr<RenderEngine> engine);
+    explicit AssimpScene(std::shared_ptr<RenderEngine> engine);
 
     void update();
 };
 
 
-#endif //OPENGLPROJECT_SCENE1_H
+#endif //OPENGLPROJECT_ASSIMPSCENE_H

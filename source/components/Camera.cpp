@@ -47,4 +47,14 @@ void Camera::processInput(const std::shared_ptr<Window>& window)
         position += cameraSpeed * direction;
     if (window->keyDown(GLFW_KEY_S))
         position -= cameraSpeed * direction;
+
+    if (window->keyDown(GLFW_KEY_A))
+    {}
+    if (window->keyDown(GLFW_KEY_D))
+    {}
+
+    if (window->keyDown(GLFW_KEY_SPACE))
+        position += cameraSpeed * glm::vec3(0.0f, 1.0f, 0.0f);
+    if (window->keyDown(GLFW_KEY_LEFT_SHIFT))
+        position -= cameraSpeed * glm::vec3(0.0f, 1.0f, 0.0f);
 }

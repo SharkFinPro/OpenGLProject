@@ -1,5 +1,6 @@
 #include "Scene1.h"
 #include "cube.h"
+#include <cmath>
 
 Scene1::Scene1(std::shared_ptr<RenderEngine> engine)
     : renderEngine(std::move(engine))
@@ -10,7 +11,7 @@ Scene1::Scene1(std::shared_ptr<RenderEngine> engine)
 
     /* Create Graphics */
     cubeVAO = std::make_shared<VAO>(true, false);
-    cubeVAO->loadVBO(vertices, sizeof(vertices), 36);
+    cubeVAO->loadVBO(cubeVertices, sizeof(cubeVertices), 36);
     cubeVAO->addAttribute(0, 3, 6, 0);
     cubeVAO->addAttribute(1, 3, 6, 3);
 
@@ -29,5 +30,7 @@ Scene1::Scene1(std::shared_ptr<RenderEngine> engine)
 
 void Scene1::update()
 {
-    cube->move(glm::vec3(0.0f, 0.005f, 0.0f));
+    pos += 0.05f;
+
+    cube->move(glm::vec3(0.0f, std::sin(pos) * 2 - cube->getPosition().y, 0.0f));
 }
