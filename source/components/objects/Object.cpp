@@ -15,3 +15,16 @@ glm::vec3 Object::getColor() const
 {
     return color;
 }
+
+void Object::render() const
+{
+    // Lighting data
+    glm::vec3 diffuse = color * lightMaterial.diffuse;
+    glm::vec3 ambient = diffuse * lightMaterial.ambient;
+    ShaderProgram::setUniform("material.ambient", ambient.x, ambient.y, ambient.z);
+    ShaderProgram::setUniform("material.diffuse", diffuse.x, diffuse.y, diffuse.z);
+    ShaderProgram::setUniform("material.specular",  lightMaterial.specular, lightMaterial.specular, lightMaterial.specular);
+    ShaderProgram::setUniform("material.shininess",  lightMaterial.shininess);
+
+    RawObject::render();
+}

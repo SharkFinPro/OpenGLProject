@@ -8,19 +8,21 @@ class ShaderProgram {
 private:
     unsigned int programID;
 
+    static unsigned int activeID;
+
 public:
     ShaderProgram(const char* vertex, const char* fragment);
     ~ShaderProgram();
 
     void use() const;
 
-    void setUniform(const char* name, const int& value) const;
-    void setUniform(const char* name, const bool& value) const;
-    void setUniform(const char* name, const float& value) const;
-    void setUniform(const char* name, const glm::mat4& value) const;
+    static void setUniform(const char* name, const int& value);
+    static void setUniform(const char* name, const bool& value);
+    static void setUniform(const char* name, const float& value);
+    static void setUniform(const char* name, const glm::mat4& value);
 
-    void setUniform(const char* name, const float& x, const float& y, const float& z) const;
-    void setUniform(const char* name, glm::vec3 vec3) const;
+    static void setUniform(const char* name, const float& x, const float& y, const float& z);
+    static void setUniform(const char* name, glm::vec3 vec3);
 };
 
 #endif //OPENGLPROJECT_SHADERPROGRAM_H

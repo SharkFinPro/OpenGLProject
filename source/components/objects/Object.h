@@ -25,6 +25,8 @@ public:
     [[nodiscard]] LightMaterial getLightMaterial() const;
 
     [[nodiscard]] glm::vec3 getColor() const;
+
+    void render() const;
 };
 
 

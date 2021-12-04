@@ -3,6 +3,8 @@
 #include <stdexcept>
 #include "../helpers/FileIO.h"
 
+unsigned int ShaderProgram::activeID = 0;
+
 ShaderProgram::ShaderProgram(const char* vertex, const char* fragment)
 {
     std::string vertexShaderSourceString, fragmentShaderSourceString;
@@ -65,34 +67,35 @@ ShaderProgram::~ShaderProgram()
 void ShaderProgram::use() const
 {
     glUseProgram(programID);
+    activeID = programID;
 }
 
-void ShaderProgram::setUniform(const char* name, const int& value) const
+void ShaderProgram::setUniform(const char* name, const int& value)
 {
-    glUniform1i(glGetUniformLocation(programID, name), value);
+    glUniform1i(glGetUniformLocation(activeID, name), value);
 }
 
-void ShaderProgram::setUniform(const char* name, const bool& value) const
+void ShaderProgram::setUniform(const char* name, const bool& value)
 {
-    glUniform1i(glGetUniformLocation(programID, name), value);
+    glUniform1i(glGetUniformLocation(activeID, name), value);
 }
 
-void ShaderProgram::setUniform(const char* name, const float& value) const
+void ShaderProgram::setUniform(const char* name, const float& value)
 {
-    glUniform1f(glGetUniformLocation(programID, name), value);
+    glUniform1f(glGetUniformLocation(activeID, name), value);
 }
 
-void ShaderProgram::setUniform(const char* name, const glm::mat4& value) const
+void ShaderProgram::setUniform(const char* name, const glm::mat4& value)
 {
-    glUniformMatrix4fv(glGetUniformLocation(programID, name), 1, GL_FALSE, glm::value_ptr(value));
+    glUniformMatrix4fv(glGetUniformLocation(activeID, name), 1, GL_FALSE, glm::value_ptr(value));
 }
 
-void ShaderProgram::setUniform(const char *name, const float &x, const float &y, const float &z) const
+void ShaderProgram::setUniform(const char *name, const float &x, const float &y, const float &z)
 {
-    glUniform3f(glGetUniformLocation(programID, name), x, y, z);
+    glUniform3f(glGetUniformLocation(activeID, name), x, y, z);
 }
 
-void ShaderProgram::setUniform(const char *name, glm::vec3 vec3) const
+void ShaderProgram::setUniform(const char *name, glm::vec3 vec3)
 {
-    glUniform3f(glGetUniformLocation(programID, name), vec3.x, vec3.y, vec3.z);
+    glUniform3f(glGetUniformLocation(activeID, name), vec3.x, vec3.y, vec3.z);
 }

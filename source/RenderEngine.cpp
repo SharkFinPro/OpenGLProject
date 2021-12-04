@@ -29,47 +29,38 @@ RenderEngine::~RenderEngine()
     glfwTerminate();
 }
 
-void RenderEngine::loadLightData(const std::shared_ptr<ShaderProgram>& shaderProgram) const
+void RenderEngine::loadLightData() const
 {
     std::shared_ptr<LightSource> light = lights.front().first;
     LightMaterial lightMaterial = light->getLightMaterial();
 
-    shaderProgram->setUniform("light.position",  light->getPosition());
-    shaderProgram->setUniform("light.color", light->getColor());
-    shaderProgram->setUniform("light.ambient",  glm::vec3(lightMaterial.ambient));
-    shaderProgram->setUniform("light.diffuse",  glm::vec3(lightMaterial.diffuse));
-    shaderProgram->setUniform("light.specular",  glm::vec3(lightMaterial.specular));
+    ShaderProgram::setUniform("light.position",  light->getPosition());
+    ShaderProgram::setUniform("light.color", light->getColor());
+    ShaderProgram::setUniform("light.ambient",  glm::vec3(lightMaterial.ambient));
+    ShaderProgram::setUniform("light.diffuse",  glm::vec3(lightMaterial.diffuse));
+    ShaderProgram::setUniform("light.specular",  glm::vec3(lightMaterial.specular));
 }
 
 void RenderEngine::renderObject(const std::shared_ptr<Object>& object, int shaderKey) const
 {
-    // set objects shader to use
+    // Set objects shader to use
     auto shaderProgram = shaderManager->getShader(shaderKey);
     shaderProgram->use();
 
     // Load uniforms
-    loadLightData(shaderProgram);
-    shaderProgram->setUniform("viewPos",  camera->getPosition().x, camera->getPosition().y, camera->getPosition().z);
+    loadLightData();
+    ShaderProgram::setUniform("viewPos",  camera->getPosition().x, camera->getPosition().y, camera->getPosition().z);
 
-    // Lighting data
-    LightMaterial lightMaterial = object->getLightMaterial();
-    glm::vec3 diffuse = object->getColor() * lightMaterial.diffuse;
-    glm::vec3 ambient = diffuse * lightMaterial.ambient;
-    shaderProgram->setUniform("material.ambient", ambient.x, ambient.y, ambient.z);
-    shaderProgram->setUniform("material.diffuse", diffuse.x, diffuse.y, diffuse.z);
-    shaderProgram->setUniform("material.specular",  lightMaterial.specular, lightMaterial.specular, lightMaterial.specular);
-    shaderProgram->setUniform("material.shininess",  lightMaterial.shininess);
-
-    // load object matrices
+    // Load object matrices
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, object->getPosition());
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
 
-    shaderProgram->setUniform("model", model);
-    shaderProgram->setUniform("view", camera->getViewMatrix());
-    shaderProgram->setUniform("projection", projection);
+    ShaderProgram::setUniform("model", model);
+    ShaderProgram::setUniform("view", camera->getViewMatrix());
+    ShaderProgram::setUniform("projection", projection);
 
-    // render
+    // Render
     object->render();
 }
 
@@ -83,9 +74,9 @@ void RenderEngine::renderLight(const std::shared_ptr<LightSource>& object, int s
     model = glm::scale(model, glm::vec3(0.2f));
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
 
-    shaderProgram->setUniform("model", model);
-    shaderProgram->setUniform("view", camera->getViewMatrix());
-    shaderProgram->setUniform("projection", projection);
+    ShaderProgram::setUniform("model", model);
+    ShaderProgram::setUniform("view", camera->getViewMatrix());
+    ShaderProgram::setUniform("projection", projection);
 
     object->render();
 }

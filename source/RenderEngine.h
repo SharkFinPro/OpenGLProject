@@ -22,7 +22,7 @@ private:
 
     bool closing = false;
 
-    void loadLightData(const std::shared_ptr<ShaderProgram>& shaderProgram) const;
+    void loadLightData() const;
 
     void renderObject(const std::shared_ptr<Object>& object, int shaderKey) const;
     void renderLight(const std::shared_ptr<LightSource>& object, int shaderKey) const;
