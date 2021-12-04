@@ -9,8 +9,8 @@
 
 namespace helpers
 {
-    void fileToString(const char* fileName, std::string& output) {
-        std::ifstream file(fileName);
+    void fileToString(const char* path, std::string& output) {
+        std::ifstream file(path);
         std::stringstream outputStream;
 
         outputStream << file.rdbuf();
@@ -18,7 +18,7 @@ namespace helpers
         output = outputStream.str();
     }
 
-    std::shared_ptr<VAO> loadModel(const std::string path)
+    std::shared_ptr<VAO> loadModel(const char* path)
     {
         /* Load model with assimp */
         Assimp::Importer importer;

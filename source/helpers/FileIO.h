@@ -7,9 +7,9 @@
 
 namespace helpers
 {
-    void fileToString(const char* fileName, std::string& output);
+    void fileToString(const char* path, std::string& output);
 
-    std::shared_ptr<VAO> loadModel(std::string path);
+    std::shared_ptr<VAO> loadModel(const char* path);
 }
 
 #endif //OPENGLPROJECT_FILEIO_H
