@@ -1,10 +1,8 @@
 #include "Object.h"
 
-Object::Object(Material material, const std::shared_ptr<VAO>& vao, glm::vec3 position)
-    : RawObject(position, vao), material(material)
-{
-
-}
+Object::Object(const std::shared_ptr<VAO>& vao, Transform transform, Material material)
+    : RawObject(vao, transform), material(material)
+{}
 
 Material Object::getLightMaterial() const
 {

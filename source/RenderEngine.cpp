@@ -34,7 +34,7 @@ void RenderEngine::loadLightData() const
     std::shared_ptr<LightSource> light = lights.front().first;
     Material material = light->getLightMaterial();
 
-    ShaderProgram::setUniform("light.position",  light->getPosition());
+    ShaderProgram::setUniform("light.position",  light->getTransform().position);
     ShaderProgram::setUniform("light.color", material.color);
     ShaderProgram::setUniform("light.ambient",  glm::vec3(material.ambient));
     ShaderProgram::setUniform("light.diffuse",  glm::vec3(material.diffuse));
@@ -52,8 +52,10 @@ void RenderEngine::renderObject(const std::shared_ptr<Object>& object, int shade
     ShaderProgram::setUniform("viewPos",  camera->getPosition().x, camera->getPosition().y, camera->getPosition().z);
 
     // Load object matrices
+    Transform transform = object->getTransform();
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, object->getPosition());
+    model = glm::translate(model, transform.position);
+    model = glm::scale(model, glm::vec3(transform.scale));
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
 
     ShaderProgram::setUniform("model", model);
@@ -68,10 +70,12 @@ void RenderEngine::renderLight(const std::shared_ptr<LightSource>& object, int s
 {
     auto shaderProgram = shaderManager->getShader(shaderKey);
 
+    Transform transform = object->getTransform();
+
     shaderProgram->use();
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, object->getPosition());
-    model = glm::scale(model, glm::vec3(0.2f));
+    model = glm::translate(model, transform.position);
+    model = glm::scale(model, glm::vec3(transform.scale));
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
 
     ShaderProgram::setUniform("model", model);

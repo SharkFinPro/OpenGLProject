@@ -20,7 +20,7 @@ private:
     Material material;
 
 public:
-    Object(Material lightMaterial, const std::shared_ptr<VAO>& vao, glm::vec3 position);
+    Object(const std::shared_ptr<VAO>& vao, Transform transform, Material material);
 
     [[nodiscard]] Material getLightMaterial() const;
 

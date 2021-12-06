@@ -6,19 +6,25 @@
 #include <glm/vec3.hpp>
 #include <memory>
 
+struct Transform {
+    glm::vec3 position;
+    glm::vec3 rotation;
+    float scale;
+};
+
 class RawObject {
 private:
-    glm::vec3 position;
+    Transform transform;
 
     std::shared_ptr<VAO> vao;
     std::shared_ptr<Texture> texture;
 
 public:
-    RawObject(glm::vec3 position, std::shared_ptr<VAO> vao, std::shared_ptr<Texture> texture = {});
+    RawObject(std::shared_ptr<VAO> vao, Transform transform, std::shared_ptr<Texture> texture = {});
 
     void render() const;
 
-    [[nodiscard]] glm::vec3 getPosition() const;
+    [[nodiscard]] Transform getTransform() const;
 
     void move(glm::vec3 change);
 };
