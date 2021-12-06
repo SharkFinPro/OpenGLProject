@@ -43,6 +43,12 @@ namespace helpers
             vertices.push_back(mesh->mNormals[i].x);
             vertices.push_back(mesh->mNormals[i].y);
             vertices.push_back(mesh->mNormals[i].z);
+
+            if (mesh->mTextureCoords[0])
+            {
+                vertices.push_back(mesh->mTextureCoords[0][i].x);
+                vertices.push_back(mesh->mTextureCoords[0][i].y);
+            }
         }
 
         for (unsigned int i = 0; i < mesh->mNumFaces; i++)
@@ -58,10 +64,13 @@ namespace helpers
         vao->loadEBO(indices.data(), static_cast<int>(indices.size() * sizeof(unsigned int)), indices.size());
 
         // Positions
-        vao->addAttribute(0, 3, 6, 0);
+        vao->addAttribute(0, 3, 8, 0);
 
         // Normals
-        vao->addAttribute(1, 3, 6, 3);
+        vao->addAttribute(1, 3, 8, 3);
+
+        // Texture Coordinates
+        vao->addAttribute(2, 2, 8, 6);
 
         return vao;
     }
