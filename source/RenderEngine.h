@@ -18,9 +18,9 @@ private:
     std::vector<std::pair<std::shared_ptr<Object>, int>> objects;
     std::vector<std::pair<std::shared_ptr<LightSource>, int>> lights;
 
-    glm::vec3 skyColor = glm::vec3(0.2f, 0.2f, 0.2f);
+    glm::vec3 skyColor;
 
-    bool closing = false;
+    bool closing;
 
     void loadLightData() const;
 
@@ -38,7 +38,7 @@ public:
     void loadObject(const std::shared_ptr<Object>& object, int shaderKey);
     void loadLight(const std::shared_ptr<LightSource>& object, int shaderKey);
 
-    [[nodiscard]] bool shouldClose() const;
+    [[nodiscard]] bool isClosing() const;
 };
 
 

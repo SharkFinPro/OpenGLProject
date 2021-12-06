@@ -22,7 +22,7 @@ private:
 public:
     RawObject(std::shared_ptr<VAO> vao, Transform transform, std::shared_ptr<Texture> texture = {});
 
-    void render() const;
+    virtual void render() const;
 
     [[nodiscard]] Transform getTransform() const;
 

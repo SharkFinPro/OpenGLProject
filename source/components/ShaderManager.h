@@ -1,8 +1,8 @@
 #ifndef OPENGLPROJECT_SHADERMANAGER_H
 #define OPENGLPROJECT_SHADERMANAGER_H
 
-#include <map>
 #include "ShaderProgram.h"
+#include <map>
 #include <memory>
 
 class ShaderManager {

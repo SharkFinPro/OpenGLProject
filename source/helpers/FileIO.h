@@ -1,9 +1,8 @@
 #ifndef OPENGLPROJECT_FILEIO_H
 #define OPENGLPROJECT_FILEIO_H
 
-#include <string>
-
 #include "../components/objects/raw/VAO.h"
+#include <string>
 
 namespace helpers
 {

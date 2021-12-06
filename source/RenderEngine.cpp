@@ -2,6 +2,7 @@
 #include <stdexcept>
 
 RenderEngine::RenderEngine(bool fullscreen)
+    : skyColor(glm::vec3(0.2f, 0.2f, 0.2f)), closing(false)
 {
     /* Initialize GLFW */
     if (!glfwInit())
@@ -127,7 +128,7 @@ void RenderEngine::loadLight(const std::shared_ptr<LightSource>& object, int sha
     lights.emplace_back(std::make_pair(object, shaderKey));
 }
 
-bool RenderEngine::shouldClose() const
+bool RenderEngine::isClosing() const
 {
     return closing;
 }

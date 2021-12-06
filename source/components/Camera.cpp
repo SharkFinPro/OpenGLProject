@@ -3,9 +3,7 @@
 
 Camera::Camera(glm::vec3 pos)
     : position(pos)
-{
-
-}
+{}
 
 glm::mat4 Camera::getViewMatrix()
 {

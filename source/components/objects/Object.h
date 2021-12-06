@@ -24,7 +24,7 @@ public:
 
     [[nodiscard]] Material getLightMaterial() const;
 
-    void render() const;
+    void render() const override;
 };
 
 

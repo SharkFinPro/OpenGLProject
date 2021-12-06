@@ -10,7 +10,7 @@ int main()
     AssimpScene scene(engine);
 
     /* Render Loop */
-    while (!engine->shouldClose())
+    while (!engine->isClosing())
     {
         scene.update();
 

@@ -14,8 +14,6 @@ void RawObject::render() const
         Texture::unBind();
 
     vao->draw();
-
-
 }
 
 Transform RawObject::getTransform() const

@@ -7,7 +7,9 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-Window::Window(int width, int height, const char *name, bool fullscreen) {
+Window::Window(int width, int height, const char *name, bool fullscreen)
+    : deltaTime(0.0f), lastTime(0.0f), mouseX(0), mouseY(0), lastMouseX(0), lastMouseY(0)
+{
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);

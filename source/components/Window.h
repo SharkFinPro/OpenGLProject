@@ -8,10 +8,13 @@
 class Window {
 private:
     GLFWwindow* window;
-    float deltaTime = 0.0f;
-    float lastTime = 0.0f;
+    float deltaTime;
+    float lastTime;
 
-    double mouseX = 0, mouseY = 0, lastMouseX, lastMouseY;
+    double mouseX;
+    double mouseY;
+    double lastMouseX;
+    double lastMouseY;
 
 public:
     Window(int width, int height, const char* name, bool fullscreen);
