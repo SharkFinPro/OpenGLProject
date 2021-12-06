@@ -44,3 +44,8 @@ void Texture::bind(GLenum layer) const
     glActiveTexture(layer);
     glBindTexture(GL_TEXTURE_2D, textureID);
 }
+
+void Texture::unBind()
+{
+    glBindTexture(GL_TEXTURE_2D, 0);
+}

@@ -12,6 +12,8 @@ public:
     ~Texture();
 
     void bind(GLenum layer) const;
+
+    static void unBind();
 };
 
 

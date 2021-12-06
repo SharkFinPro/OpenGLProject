@@ -20,7 +20,7 @@ private:
     Material material;
 
 public:
-    Object(const std::shared_ptr<VAO>& vao, Transform transform, Material material);
+    Object(const std::shared_ptr<VAO>& vao, Transform transform, Material material, const std::shared_ptr<Texture>& texture = nullptr);
 
     [[nodiscard]] Material getLightMaterial() const;
 

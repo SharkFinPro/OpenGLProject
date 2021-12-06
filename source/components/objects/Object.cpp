@@ -1,7 +1,7 @@
 #include "Object.h"
 
-Object::Object(const std::shared_ptr<VAO>& vao, Transform transform, Material material)
-    : RawObject(vao, transform), material(material)
+Object::Object(const std::shared_ptr<VAO>& vao, Transform transform, Material material, const std::shared_ptr<Texture>& texture)
+    : RawObject(vao, transform, texture), material(material)
 {}
 
 Material Object::getLightMaterial() const
