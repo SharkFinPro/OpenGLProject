@@ -7,24 +7,22 @@
 #include <glm/vec3.hpp>
 #include <memory>
 
-struct LightMaterial {
+struct Material {
     float ambient;
     float diffuse;
     float specular;
     float shininess;
+    glm::vec3 color;
 };
 
 class Object : public RawObject {
 private:
-    LightMaterial lightMaterial;
-    glm::vec3 color;
+    Material material;
 
 public:
-    Object(LightMaterial lightMaterial, const std::shared_ptr<VAO>& vao, glm::vec3 position, glm::vec3 color);
+    Object(Material lightMaterial, const std::shared_ptr<VAO>& vao, glm::vec3 position);
 
-    [[nodiscard]] LightMaterial getLightMaterial() const;
-
-    [[nodiscard]] glm::vec3 getColor() const;
+    [[nodiscard]] Material getLightMaterial() const;
 
     void render() const;
 };

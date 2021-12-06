@@ -1,30 +1,25 @@
 #include "Object.h"
 
-Object::Object(LightMaterial lightMaterial, const std::shared_ptr<VAO>& vao, glm::vec3 position, glm::vec3 color)
-    : RawObject(position, vao), lightMaterial(lightMaterial), color(color)
+Object::Object(Material material, const std::shared_ptr<VAO>& vao, glm::vec3 position)
+    : RawObject(position, vao), material(material)
 {
 
 }
 
-LightMaterial Object::getLightMaterial() const
+Material Object::getLightMaterial() const
 {
-    return lightMaterial;
-}
-
-glm::vec3 Object::getColor() const
-{
-    return color;
+    return material;
 }
 
 void Object::render() const
 {
     // Lighting data
-    glm::vec3 diffuse = color * lightMaterial.diffuse;
-    glm::vec3 ambient = diffuse * lightMaterial.ambient;
+    glm::vec3 diffuse = material.color * material.diffuse;
+    glm::vec3 ambient = diffuse * material.ambient;
     ShaderProgram::setUniform("material.ambient", ambient.x, ambient.y, ambient.z);
     ShaderProgram::setUniform("material.diffuse", diffuse.x, diffuse.y, diffuse.z);
-    ShaderProgram::setUniform("material.specular",  lightMaterial.specular, lightMaterial.specular, lightMaterial.specular);
-    ShaderProgram::setUniform("material.shininess",  lightMaterial.shininess);
+    ShaderProgram::setUniform("material.specular",  material.specular, material.specular, material.specular);
+    ShaderProgram::setUniform("material.shininess",  material.shininess);
 
     RawObject::render();
 }

@@ -5,7 +5,7 @@
 
 class LightSource : public Object {
 public:
-    LightSource(const std::shared_ptr<VAO>& vao, LightMaterial lightMaterial, glm::vec3 lightPosition, glm::vec3 lightColor);
+    LightSource(const std::shared_ptr<VAO>& vao, Material material, glm::vec3 lightPosition);
 };
 
 
