@@ -41,7 +41,7 @@ Texture::~Texture()
 
 void Texture::bind(GLenum layer) const
 {
-    glActiveTexture(layer);
+    glActiveTexture(GL_TEXTURE0 + layer);
     glBindTexture(GL_TEXTURE_2D, textureID);
 }
 

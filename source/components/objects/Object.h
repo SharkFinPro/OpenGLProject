@@ -18,9 +18,10 @@ struct Material {
 class Object : public RawObject {
 private:
     Material material;
+    std::shared_ptr<Texture> specularMap;
 
 public:
-    Object(const std::shared_ptr<VAO>& vao, Transform transform, Material material, const std::shared_ptr<Texture>& texture = nullptr);
+    Object(const std::shared_ptr<VAO>& vao, Transform transform, Material material, const std::shared_ptr<Texture>& texture = nullptr, std::shared_ptr<Texture>  specularMap = nullptr);
 
     [[nodiscard]] Material getLightMaterial() const;
 
