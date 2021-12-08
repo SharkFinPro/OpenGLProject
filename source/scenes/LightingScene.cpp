@@ -14,8 +14,8 @@ LightingScene::LightingScene(std::shared_ptr<RenderEngine> engine)
 
     Transform cubeTransform = {glm::vec3(-1.5f, -1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 1.5f};
     Material cubeMaterial = { 0.2f, 0.5f, 0.5f, 32.0f, glm::vec3(1.0f, 1.0f, 1.0f)};
-    auto cubeTexture = std::make_shared<Texture>("assets/images/container", "png");
-    auto cubeSpecularMap = std::make_shared<Texture>("assets/images/container_specular", "png");
+    auto cubeTexture = std::make_shared<Texture>("assets/images/container.png");
+    auto cubeSpecularMap = std::make_shared<Texture>("assets/images/container_specular.png");
     cube = std::make_shared<Object>(cubeVAO, cubeTransform, cubeMaterial, cubeTexture, cubeSpecularMap);
 
     Transform lightCubeTransform = {glm::vec3(1.2f, 1.0f, -1.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.3f};

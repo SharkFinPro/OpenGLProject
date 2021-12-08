@@ -8,7 +8,7 @@ private:
     unsigned int textureID{};
 
 public:
-    Texture(const char* fileName, const char* fileType);
+    explicit Texture(const char* path);
     ~Texture();
 
     void bind(GLenum layer) const;

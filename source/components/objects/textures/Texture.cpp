@@ -4,7 +4,7 @@
 #include <stb/stb_image.h>
 #include <stdexcept>
 
-Texture::Texture(const char* fileName, const char* fileType)
+Texture::Texture(const char* path)
 {
     glGenTextures(1, &textureID);
     bind(GL_TEXTURE0);
@@ -17,13 +17,15 @@ Texture::Texture(const char* fileName, const char* fileType)
 
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true);
-    unsigned char* data = stbi_load(std::string(std::string(fileName) + "." + fileType).c_str(), &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load(path, &width, &height, &nrChannels, 0);
 
     if (data)
     {
-        if (strcmp(fileType, "jpg") == 0)
+        std::string file = path;
+        std::string fileExtension = file.substr(file.find_last_of('.') + 1);
+        if (fileExtension == "jpg")
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        else if (strcmp(fileType, "png") == 0)
+        else if (fileExtension == "png")
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
         glGenerateMipmap(GL_TEXTURE_2D);
