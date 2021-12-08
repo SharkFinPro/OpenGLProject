@@ -12,10 +12,7 @@ Material Object::getLightMaterial() const
 void Object::render() const
 {
     // Lighting data
-    glm::vec3 diffuse = material.color * material.diffuse;
-    glm::vec3 ambient = diffuse * material.ambient;
-    ShaderProgram::setUniform("material.ambient", ambient.x, ambient.y, ambient.z);
-    ShaderProgram::setUniform("material.diffuse", diffuse.x, diffuse.y, diffuse.z);
+    ShaderProgram::setUniform("material.diffuse", 0);
     ShaderProgram::setUniform("material.specular",  material.specular, material.specular, material.specular);
     ShaderProgram::setUniform("material.shininess",  material.shininess);
 

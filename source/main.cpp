@@ -1,5 +1,5 @@
 #include "RenderEngine.h"
-#include "scenes/AssimpScene.h"
+#include "scenes/LightingScene.h"
 #include <memory>
 
 int main()
@@ -7,7 +7,7 @@ int main()
     /* Create Engine */
     auto engine = std::make_shared<RenderEngine>();
 
-    AssimpScene scene(engine);
+    LightingScene scene(engine);
 
     /* Render Loop */
     while (!engine->isClosing())

@@ -32,7 +32,7 @@ namespace helpers
         std::vector<float> vertices;
         std::vector<unsigned int> indices;
 
-        aiMesh* mesh = scene->mMeshes[scene->mRootNode->mChildren[0]->mMeshes[0]];
+        aiMesh* mesh = scene->mMeshes[0];
 
         for (unsigned int i = 0; i < mesh->mNumVertices; i++)
         {
