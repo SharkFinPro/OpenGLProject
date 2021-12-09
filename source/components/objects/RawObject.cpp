@@ -8,17 +8,18 @@ RawObject::RawObject(std::shared_ptr<VAO> vao, Transform transform, std::shared_
 
 void RawObject::render() const
 {
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, transform.position);
+    model = glm::scale(model, glm::vec3(transform.scale));
+
+    ShaderProgram::setUniform("model", model);
+
     if (texture)
         texture->bind(0);
     else
         Texture::unBind();
 
     vao->draw();
-}
-
-Transform RawObject::getTransform() const
-{
-    return transform;
 }
 
 void RawObject::move(glm::vec3 change)

@@ -11,12 +11,10 @@ private:
 
     std::shared_ptr<Object> cube;
 
-    std::shared_ptr<LightSource> lightCube;
+    std::shared_ptr<LightSource> lightSource;
 
 public:
     explicit LightingScene(std::shared_ptr<RenderEngine> engine);
-
-    void update();
 };
 
 

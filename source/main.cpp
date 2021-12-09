@@ -11,9 +11,5 @@ int main()
 
     /* Render Loop */
     while (!engine->isClosing())
-    {
-        scene.update();
-
         engine->render();
-    }
 }

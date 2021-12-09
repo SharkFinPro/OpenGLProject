@@ -24,8 +24,6 @@ public:
 
     virtual void render() const;
 
-    [[nodiscard]] Transform getTransform() const;
-
     void move(glm::vec3 change);
 };
 
