@@ -18,8 +18,8 @@ private:
 public:
     explicit Camera(glm::vec3 pos = glm::vec3(0.0f, 0.0f, 0.0f));
 
-    [[nodiscard]] glm::mat4 getViewMatrix();
-    [[nodiscard]] glm::vec3 getPosition();
+    [[nodiscard]] glm::mat4 getViewMatrix() const;
+    [[nodiscard]] glm::vec3 getPosition() const;
 
     void processInput(const std::shared_ptr<Window>& window);
 };

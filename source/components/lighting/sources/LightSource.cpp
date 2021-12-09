@@ -3,7 +3,7 @@
 #include "../../ShaderProgram.h"
 
 LightSource::LightSource(glm::vec3 position, glm::vec3 color, float ambient, float diffuse, float specular)
-    : position(position), color(color), ambient(glm::vec3(ambient)), diffuse(glm::vec3(diffuse)), specular(glm::vec3(specular))
+    : position(position), color(color), ambient(ambient), diffuse(diffuse), specular(specular)
 {}
 
 void LightSource::load() const

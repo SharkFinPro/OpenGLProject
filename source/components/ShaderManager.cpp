@@ -1,9 +1,11 @@
 #include "ShaderManager.h"
 
+ShaderManager::ShaderManager()
+= default;
+
 void ShaderManager::loadShader(int key, const char* vertexShader, const char* fragmentShader)
 {
-    auto shader = std::make_shared<ShaderProgram>(vertexShader, fragmentShader);
-    shaders.insert({ key, shader });
+    shaders.insert({ key, std::make_shared<ShaderProgram>(vertexShader, fragmentShader) });
 }
 
 std::shared_ptr<ShaderProgram> ShaderManager::getShader(int key) const

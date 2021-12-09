@@ -10,6 +10,8 @@ private:
     std::map<int, std::shared_ptr<ShaderProgram>> shaders;
 
 public:
+    ShaderManager();
+
     void loadShader(int key, const char* vertexShader, const char* fragmentShader);
 
     [[nodiscard]] std::shared_ptr<ShaderProgram> getShader(int key) const;

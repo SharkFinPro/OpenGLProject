@@ -2,7 +2,7 @@
 #include <stdexcept>
 
 RenderEngine::RenderEngine(bool fullscreen)
-    : skyColor(glm::vec3(0.2f, 0.2f, 0.2f)), closing(false)
+    : skyColor(glm::vec3(0.0f)), closing(false)
 {
     /* Initialize GLFW */
     if (!glfwInit())
@@ -32,9 +32,10 @@ RenderEngine::~RenderEngine()
 
 void RenderEngine::renderObject(const std::shared_ptr<Object>& object, int shaderKey)
 {
-    // Set objects shader to use
+    // Enable object's shader
     shaderManager->getShader(shaderKey)->use();
 
+    // Load uniforms
     lightSource->load();
     ShaderProgram::setUniform("viewPos",  camera->getPosition().x, camera->getPosition().y, camera->getPosition().z);
 
@@ -48,6 +49,7 @@ void RenderEngine::renderObject(const std::shared_ptr<Object>& object, int shade
 
 void RenderEngine::render()
 {
+    // If window can't be rendered to, exit before rendering
     if (window->shouldClose())
     {
         closing = true;
@@ -80,12 +82,17 @@ void RenderEngine::loadObject(const std::shared_ptr<Object>& object, int shaderK
     objects.emplace_back(std::make_pair(object, shaderKey));
 }
 
-void RenderEngine::loadLightSource(const std::shared_ptr<LightSource>& lightSource_)
+void RenderEngine::loadLightSource(const std::shared_ptr<LightSource>& source)
 {
-    lightSource = lightSource_;
+    lightSource = source;
 }
 
 bool RenderEngine::isClosing() const
 {
     return closing;
+}
+
+void RenderEngine::setSkyColor(glm::vec3 color)
+{
+    skyColor = color;
 }

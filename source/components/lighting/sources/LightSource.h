@@ -7,9 +7,9 @@ class LightSource {
 private:
     glm::vec3 position;
     glm::vec3 color;
-    glm::vec3 ambient;
-    glm::vec3 diffuse;
-    glm::vec3 specular;
+    float ambient;
+    float diffuse;
+    float specular;
 
 public:
     explicit LightSource(glm::vec3 position, glm::vec3 color, float ambient, float diffuse, float specular);

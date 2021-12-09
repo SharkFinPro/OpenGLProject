@@ -34,9 +34,12 @@ public:
     void loadShader(int key, const char* vertexShader, const char* fragmentShader);
 
     void loadObject(const std::shared_ptr<Object>& object, int shaderKey);
-    void loadLightSource(const std::shared_ptr<LightSource> &lightSource_);
+
+    void loadLightSource(const std::shared_ptr<LightSource> &source);
 
     [[nodiscard]] bool isClosing() const;
+
+    void setSkyColor(glm::vec3 color);
 };
 
 

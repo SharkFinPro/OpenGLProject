@@ -12,6 +12,8 @@ LightingScene::LightingScene(std::shared_ptr<RenderEngine> engine)
     lightSource = std::make_shared<LightSource>(glm::vec3(1.2f, 1.0f, -1.0f), glm::vec3(1.0f, 1.0f, 1.0f), 0.2f, 0.5f, 1.0f);
     renderEngine->loadLightSource(lightSource);
 
+    renderEngine->setSkyColor(glm::vec3(0.2f));
+
     /* Load Objects */
     cubeVAO = helpers::loadModel("assets/objects/cube.obj");
 

@@ -8,7 +8,7 @@ private:
     unsigned int textureID{};
 
 public:
-    explicit Texture(const char* path);
+    explicit Texture(const char* path, bool flip = true);
     ~Texture();
 
     void bind(GLenum layer) const;

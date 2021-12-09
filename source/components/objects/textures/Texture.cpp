@@ -4,7 +4,7 @@
 #include <stb/stb_image.h>
 #include <stdexcept>
 
-Texture::Texture(const char* path)
+Texture::Texture(const char* path, bool flip)
 {
     glGenTextures(1, &textureID);
     bind(GL_TEXTURE0);
@@ -16,22 +16,20 @@ Texture::Texture(const char* path)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     int width, height, nrChannels;
-    stbi_set_flip_vertically_on_load(true);
+    stbi_set_flip_vertically_on_load(flip);
     unsigned char* data = stbi_load(path, &width, &height, &nrChannels, 0);
 
-    if (data)
-    {
-        std::string file = path;
-        std::string fileExtension = file.substr(file.find_last_of('.') + 1);
-        if (fileExtension == "jpg")
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        else if (fileExtension == "png")
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
+    if (!data)
         throw std::runtime_error("Failed to load texture");
+
+    std::string file = path;
+    std::string fileExtension = file.substr(file.find_last_of('.') + 1);
+    if (fileExtension == "jpg")
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    else if (fileExtension == "png")
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+
+    glGenerateMipmap(GL_TEXTURE_2D);
 
     stbi_image_free(data);
 }
