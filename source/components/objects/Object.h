@@ -7,23 +7,13 @@
 #include <glm/vec3.hpp>
 #include <memory>
 
-struct Material {
-    float ambient;
-    float diffuse;
-    float specular;
-    float shininess;
-    glm::vec3 color;
-};
-
 class Object : public RawObject {
 private:
-    Material material;
     std::shared_ptr<Texture> specularMap;
+    float shininess;
 
 public:
-    Object(const std::shared_ptr<VAO>& vao, Transform transform, Material material, const std::shared_ptr<Texture>& texture = nullptr, std::shared_ptr<Texture>  specularMap = nullptr);
-
-    [[nodiscard]] Material getLightMaterial() const;
+    Object(const std::shared_ptr<VAO>& vao, Transform transform, const std::shared_ptr<Texture>& texture, std::shared_ptr<Texture> specularMap, float shininess);
 
     void render() const override;
 };
