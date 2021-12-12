@@ -5,6 +5,12 @@
 LightingScene::LightingScene(std::shared_ptr<RenderEngine> engine)
         : renderEngine(std::move(engine))
 {
+    /* Create Window */
+    renderEngine->createWindow(800, 600, "3D Rendering Engine", true);
+
+    /* Create Camera */
+    renderEngine->createCamera(glm::vec3(0.0f, 0.0f, -5.0f));
+
     /* Load Shaders */
     renderEngine->loadShader(0, "assets/shaders/specularMap.vert", "assets/shaders/specularMap.frag");
 

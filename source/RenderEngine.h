@@ -26,8 +26,12 @@ private:
     void renderObject(const std::shared_ptr<Object>& object, int shaderKey);
 
 public:
-    explicit RenderEngine(bool fullscreen = false);
+    RenderEngine();
     ~RenderEngine();
+
+    void createWindow(int width, int height, const char* name, bool fullscreen = false);
+
+    void createCamera(glm::vec3 position);
 
     void render();
 

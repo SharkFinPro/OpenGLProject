@@ -1,25 +1,12 @@
 #include "RenderEngine.h"
 #include <stdexcept>
 
-RenderEngine::RenderEngine(bool fullscreen)
+RenderEngine::RenderEngine()
     : skyColor(glm::vec3(0.0f)), closing(false)
 {
     /* Initialize GLFW */
     if (!glfwInit())
         throw std::runtime_error("Failed to initialize GLFW");
-
-    /* Create Window */
-    window = std::make_shared<Window>(800, 600, "3D Rendering Engine", fullscreen);
-    window->makeCurrentContext();
-
-    /* Load GLAD */
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-        throw std::runtime_error("Failed to initialize GLAD");
-
-    glEnable(GL_DEPTH_TEST);
-
-    /* Camera */
-    camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, -5.0f));
 
     /* Shader Manager */
     shaderManager = std::make_unique<ShaderManager>();
@@ -28,6 +15,23 @@ RenderEngine::RenderEngine(bool fullscreen)
 RenderEngine::~RenderEngine()
 {
     glfwTerminate();
+}
+
+void RenderEngine::createWindow(int width, int height, const char *name, bool fullscreen)
+{
+    window = std::make_shared<Window>(width, height, name, fullscreen);
+    window->makeCurrentContext();
+
+    /* Load GLAD */
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+        throw std::runtime_error("Failed to initialize GLAD");
+
+    glEnable(GL_DEPTH_TEST);
+}
+
+void RenderEngine::createCamera(glm::vec3 position)
+{
+    camera = std::make_unique<Camera>(position);
 }
 
 void RenderEngine::renderObject(const std::shared_ptr<Object>& object, int shaderKey)
