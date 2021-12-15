@@ -19,15 +19,15 @@ void Camera::processInput(const std::shared_ptr<Window>& window)
 {
     float cameraSpeed = speed * window->getDeltaTime();
 
-    double mx, my, omx, omy;
-    window->getCursorPos(mx, my);
-    window->getLastCursorPos(omx, omy);
-
-    auto deltaMX = static_cast<float>(mx - omx) / (static_cast<float>(window->getWidth()) / 800.0f);
-    auto deltaMY = static_cast<float>(my - omy) / (static_cast<float>(window->getHeight()) / 600.0f);
-
     if (window->buttonDown(GLFW_MOUSE_BUTTON_RIGHT))
     {
+        double mx, my, omx, omy;
+        window->getCursorPos(mx, my);
+        window->getLastCursorPos(omx, omy);
+
+        auto deltaMX = static_cast<float>(mx - omx) / (static_cast<float>(window->getWidth()) / 800.0f);
+        auto deltaMY = static_cast<float>(my - omy) / (static_cast<float>(window->getHeight()) / 600.0f);
+
         yaw += deltaMX;
         pitch -= deltaMY;
     }
