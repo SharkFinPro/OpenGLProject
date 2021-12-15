@@ -1,11 +1,11 @@
-#include "RenderEngine.h"
-#include "scenes/LightingScene.h"
+#include <source/RenderEngine.h>
+#include "LightingScene.h"
 #include <memory>
 
 int main()
 {
     /* Create Engine */
-    auto engine = std::make_shared<RenderEngine>();
+    auto engine = std::make_shared<Engine::RenderEngine>();
 
     LightingScene scene(engine);
 

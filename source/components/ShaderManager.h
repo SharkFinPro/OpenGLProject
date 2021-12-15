@@ -5,17 +5,18 @@
 #include <map>
 #include <memory>
 
-class ShaderManager {
-private:
-    std::map<int, std::shared_ptr<ShaderProgram>> shaders;
+namespace Engine {
+    class ShaderManager {
+    private:
+        std::map<int, std::shared_ptr<ShaderProgram>> shaders;
 
-public:
-    ShaderManager();
+    public:
+        ShaderManager();
 
-    void loadShader(int key, const char* vertexShader, const char* fragmentShader);
+        void loadShader(int key, const char *vertexShader, const char *fragmentShader);
 
-    [[nodiscard]] std::shared_ptr<ShaderProgram> getShader(int key) const;
-};
-
+        [[nodiscard]] std::shared_ptr<ShaderProgram> getShader(int key) const;
+    };
+}
 
 #endif //OPENGLPROJECT_SHADERMANAGER_H

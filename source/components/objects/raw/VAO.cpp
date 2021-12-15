@@ -1,51 +1,53 @@
 #include "VAO.h"
 #include <glad/glad.h>
 
-VAO::VAO(bool useVBO, bool useEBO)
-{
-    if (useVBO)
-        vbo = std::make_shared<VBO>();
+namespace Engine {
+    VAO::VAO(bool useVBO, bool useEBO)
+    {
+        if (useVBO)
+            vbo = std::make_shared<VBO>();
 
-    if (useEBO)
-        ebo = std::make_shared<EBO>();
+        if (useEBO)
+            ebo = std::make_shared<EBO>();
 
-    glGenVertexArrays(1, &id);
-}
+        glGenVertexArrays(1, &id);
+    }
 
-VAO::~VAO()
-{
-    glDeleteVertexArrays(1, &id);
-}
+    VAO::~VAO()
+    {
+        glDeleteVertexArrays(1, &id);
+    }
 
-void VAO::bind() const
-{
-    glBindVertexArray(id);
-}
+    void VAO::bind() const
+    {
+        glBindVertexArray(id);
+    }
 
-void VAO::addAttribute(int index, int size, int stride, int distance) const
-{
-    bind();
-    glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, static_cast<GLsizei>(stride * sizeof(float)), (void*)(distance * sizeof(float)));
-    glEnableVertexAttribArray(index);
-}
+    void VAO::addAttribute(int index, int size, int stride, int distance) const
+    {
+        bind();
+        glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, static_cast<GLsizei>(stride * sizeof(float)), (void *) (distance * sizeof(float)));
+        glEnableVertexAttribArray(index);
+    }
 
-void VAO::loadVBO(float *vertices, int verticesSize, unsigned int verticesCount)
-{
-    bind();
-    vbo->load(vertices, verticesSize, verticesCount);
-}
+    void VAO::loadVBO(float *vertices, int verticesSize, unsigned int verticesCount)
+    {
+        bind();
+        vbo->load(vertices, verticesSize, verticesCount);
+    }
 
-[[maybe_unused]] void VAO::loadEBO(unsigned int *indices, int indicesSize, unsigned int triangles)
-{
-    bind();
-    ebo->load(indices, indicesSize, triangles);
-}
+    void VAO::loadEBO(unsigned int *indices, int indicesSize, unsigned int triangles)
+    {
+        bind();
+        ebo->load(indices, indicesSize, triangles);
+    }
 
-void VAO::draw() const
-{
-    bind();
-    if (ebo != nullptr)
-        glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(ebo->getTriangles()), GL_UNSIGNED_INT, nullptr);
-    else
-        glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(vbo->getVerticesCount()));
+    void VAO::draw() const
+    {
+        bind();
+        if (ebo != nullptr)
+            glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(ebo->getTriangles()), GL_UNSIGNED_INT, nullptr);
+        else
+            glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(vbo->getVerticesCount()));
+    }
 }

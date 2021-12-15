@@ -2,14 +2,13 @@
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
-
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-namespace helpers
-{
-    void fileToString(const char* path, std::string& output) {
+namespace Engine::helpers {
+    void fileToString(const char *path, std::string &output)
+    {
         std::ifstream file(path);
         std::stringstream outputStream;
 
@@ -18,11 +17,11 @@ namespace helpers
         output = outputStream.str();
     }
 
-    std::shared_ptr<VAO> loadModel(const char* path)
+    std::shared_ptr<VAO> loadModel(const char *path)
     {
         /* Load model with assimp */
         Assimp::Importer importer;
-        const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+        const aiScene *scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
         // Check for errors
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
@@ -32,7 +31,7 @@ namespace helpers
         std::vector<float> vertices;
         std::vector<unsigned int> indices;
 
-        aiMesh* mesh = scene->mMeshes[0];
+        aiMesh *mesh = scene->mMeshes[0];
 
         for (unsigned int i = 0; i < mesh->mNumVertices; i++)
         {
@@ -54,7 +53,7 @@ namespace helpers
         for (unsigned int i = 0; i < mesh->mNumFaces; i++)
         {
             aiFace face = mesh->mFaces[i];
-            for(unsigned int j = 0; j < face.mNumIndices; j++)
+            for (unsigned int j = 0; j < face.mNumIndices; j++)
                 indices.push_back(face.mIndices[j]);
         }
 

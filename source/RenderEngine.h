@@ -9,42 +9,44 @@
 #include <vector>
 #include <memory>
 
-class RenderEngine {
-private:
-    std::shared_ptr<Window> window;
-    std::unique_ptr<Camera> camera;
-    std::unique_ptr<ShaderManager> shaderManager;
+namespace Engine {
+    class RenderEngine {
+    private:
+        std::shared_ptr<Window> window;
+        std::unique_ptr<Camera> camera;
+        std::unique_ptr<ShaderManager> shaderManager;
 
-    std::vector<std::pair<std::shared_ptr<Object>, int>> objects;
+        std::vector<std::pair<std::shared_ptr<Object>, int>> objects;
 
-    std::shared_ptr<LightSource> lightSource;
+        std::shared_ptr<LightSource> lightSource;
 
-    glm::vec3 skyColor;
+        glm::vec3 skyColor;
 
-    bool closing;
+        bool closing;
 
-    void renderObject(const std::shared_ptr<Object>& object, int shaderKey);
+        void renderObject(const std::shared_ptr<Object> &object, int shaderKey);
 
-public:
-    RenderEngine();
-    ~RenderEngine();
+    public:
+        RenderEngine();
 
-    void createWindow(int width, int height, const char* name, bool fullscreen = false);
+        ~RenderEngine();
 
-    void createCamera(glm::vec3 position);
+        void createWindow(int width, int height, const char *name, bool fullscreen = false);
 
-    void render();
+        void createCamera(glm::vec3 position);
 
-    void loadShader(int key, const char* vertexShader, const char* fragmentShader);
+        void render();
 
-    void loadObject(const std::shared_ptr<Object>& object, int shaderKey);
+        void loadShader(int key, const char *vertexShader, const char *fragmentShader);
 
-    void loadLightSource(const std::shared_ptr<LightSource> &source);
+        void loadObject(const std::shared_ptr<Object> &object, int shaderKey);
 
-    [[nodiscard]] bool isClosing() const;
+        void loadLightSource(const std::shared_ptr<LightSource> &source);
 
-    void setSkyColor(glm::vec3 color);
-};
+        [[nodiscard]] bool isClosing() const;
 
+        void setSkyColor(glm::vec3 color);
+    };
+}
 
 #endif //OPENGLPROJECT_RENDERENGINE_H

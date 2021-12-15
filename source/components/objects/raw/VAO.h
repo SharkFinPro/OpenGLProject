@@ -6,24 +6,28 @@
 #include <memory>
 #include <vector>
 
-class VAO {
-private:
-    unsigned int id{};
-    std::shared_ptr<VBO> vbo;
-    std::shared_ptr<EBO> ebo;
+namespace Engine {
+    class VAO {
+    private:
+        unsigned int id{};
+        std::shared_ptr<VBO> vbo;
+        std::shared_ptr<EBO> ebo;
 
-public:
-    VAO(bool useVBO, bool useEBO);
-    ~VAO();
+    public:
+        VAO(bool useVBO, bool useEBO);
 
-    void bind() const;
+        ~VAO();
 
-    void loadVBO(float vertices[], int verticesSize, unsigned int verticesCount = {});
-    [[maybe_unused]] void loadEBO(unsigned int indices[], int indicesSize, unsigned int triangles);
-    void addAttribute(int index, int size, int stride, int distance) const;
+        void bind() const;
 
-    void draw() const;
-};
+        void loadVBO(float vertices[], int verticesSize, unsigned int verticesCount = {});
 
+        void loadEBO(unsigned int indices[], int indicesSize, unsigned int triangles);
+
+        void addAttribute(int index, int size, int stride, int distance) const;
+
+        void draw() const;
+    };
+}
 
 #endif //OPENGLPROJECT_VAO_H

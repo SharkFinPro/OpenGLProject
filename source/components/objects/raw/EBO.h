@@ -1,20 +1,22 @@
 #ifndef OPENGLPROJECT_EBO_H
 #define OPENGLPROJECT_EBO_H
 
+namespace Engine {
+    class EBO {
+    private:
+        unsigned int id{}, triangles{};
 
-class EBO {
-private:
-    unsigned int id{}, triangles{};
+    public:
+        EBO();
 
-public:
-    EBO();
-    ~EBO();
+        ~EBO();
 
-    void bind() const;
-    void load(unsigned int indices[], int indicesSize, unsigned int triangles);
+        void bind() const;
 
-    [[nodiscard]] unsigned int getTriangles() const;
-};
+        void load(unsigned int indices[], int indicesSize, unsigned int triangles);
 
+        [[nodiscard]] unsigned int getTriangles() const;
+    };
+}
 
 #endif //OPENGLPROJECT_EBO_H

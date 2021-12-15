@@ -6,26 +6,27 @@
 #include <glm/vec3.hpp>
 #include <memory>
 
-struct Transform {
-    glm::vec3 position;
-    glm::vec3 rotation;
-    float scale;
-};
+namespace Engine {
+    struct Transform {
+        glm::vec3 position;
+        glm::vec3 rotation;
+        float scale;
+    };
 
-class RawObject {
-private:
-    Transform transform;
+    class RawObject {
+    private:
+        Transform transform;
 
-    std::shared_ptr<VAO> vao;
-    std::shared_ptr<Texture> texture;
+        std::shared_ptr<VAO> vao;
+        std::shared_ptr<Texture> texture;
 
-public:
-    RawObject(std::shared_ptr<VAO> vao, Transform transform, std::shared_ptr<Texture> texture = {});
+    public:
+        RawObject(std::shared_ptr<VAO> vao, Transform transform, std::shared_ptr<Texture> texture = {});
 
-    virtual void render() const;
+        virtual void render() const;
 
-    void move(glm::vec3 change);
-};
-
+        void move(glm::vec3 change);
+    };
+}
 
 #endif //OPENGLPROJECT_RAWOBJECT_H

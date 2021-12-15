@@ -1,28 +1,29 @@
 #include "RawObject.h"
-
 #include "../ShaderProgram.h"
 
-RawObject::RawObject(std::shared_ptr<VAO> vao, Transform transform, std::shared_ptr<Texture> texture)
-    : transform(transform), vao(std::move(vao)), texture(std::move(texture))
-{}
+namespace Engine {
+    RawObject::RawObject(std::shared_ptr<VAO> vao, Transform transform, std::shared_ptr<Texture> texture)
+        : transform(transform), vao(std::move(vao)), texture(std::move(texture))
+    {}
 
-void RawObject::render() const
-{
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, transform.position);
-    model = glm::scale(model, glm::vec3(transform.scale));
+    void RawObject::render() const
+    {
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, transform.position);
+        model = glm::scale(model, glm::vec3(transform.scale));
 
-    ShaderProgram::setUniform("model", model);
+        ShaderProgram::setUniform("model", model);
 
-    if (texture)
-        texture->bind(0);
-    else
-        Texture::unBind();
+        if (texture)
+            texture->bind(0);
+        else
+            Texture::unBind();
 
-    vao->draw();
-}
+        vao->draw();
+    }
 
-void RawObject::move(glm::vec3 change)
-{
-    transform.position += change;
+    void RawObject::move(glm::vec3 change)
+    {
+        transform.position += change;
+    }
 }

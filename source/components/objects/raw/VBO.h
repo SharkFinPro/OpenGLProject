@@ -3,20 +3,23 @@
 
 #include <vector>
 
-class VBO {
-private:
-    unsigned int id{};
-    unsigned int verticesCount{};
+namespace Engine {
+    class VBO {
+    private:
+        unsigned int id{};
+        unsigned int verticesCount{};
 
-public:
-    VBO();
-    ~VBO();
+    public:
+        VBO();
 
-    void bind() const;
-    void load(float vertices[], int verticesSize, unsigned int verticesCount = {});
+        ~VBO();
 
-    [[nodiscard]] unsigned int getVerticesCount() const;
-};
+        void bind() const;
 
+        void load(float vertices[], int verticesSize, unsigned int verticesCount = {});
+
+        [[nodiscard]] unsigned int getVerticesCount() const;
+    };
+}
 
 #endif //OPENGLPROJECT_VBO_H

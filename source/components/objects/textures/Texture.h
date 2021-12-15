@@ -3,18 +3,20 @@
 
 #include <glad/glad.h>
 
-class Texture {
-private:
-    unsigned int textureID{};
+namespace Engine {
+    class Texture {
+    private:
+        unsigned int textureID{};
 
-public:
-    explicit Texture(const char* path, bool flip = true);
-    ~Texture();
+    public:
+        explicit Texture(const char *path, bool flip = true);
 
-    void bind(GLenum layer) const;
+        ~Texture();
 
-    static void unBind();
-};
+        void bind(GLenum layer) const;
 
+        static void unBind();
+    };
+}
 
 #endif //OPENGLPROJECT_TEXTURE_H

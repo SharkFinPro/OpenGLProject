@@ -1,27 +1,43 @@
 cmake_minimum_required(VERSION 3.20)
-project(OpenGLProject)
+
+# Engine Build Options
+set(ENGINE_BUILD_TESTS ON)
+
+# Set Include and Linking Directories
+link_directories(${CMAKE_BINARY_DIR}/bin)
+
+include_directories(
+    external/include
+)
+
+file(COPY "source/assets/" DESTINATION "bin/assets/")
+file(COPY "external/lib/" DESTINATION "bin/")
+
+# Project Settings
+project(Project)
 
 set(CMAKE_CXX_STANDARD 17)
 
-#set directory to store libraries
-link_directories(external/lib)
+set(ENGINE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
-#create executable
-add_executable(${PROJECT_NAME} source/main.cpp source/components/ShaderProgram.cpp source/components/ShaderProgram.h source/helpers/FileIO.h source/helpers/FileIO.cpp source/components/Window.cpp source/components/Window.h source/components/objects/textures/Texture.cpp source/components/objects/textures/Texture.h source/components/objects/raw/VAO.cpp source/components/objects/raw/VAO.h source/components/objects/raw/EBO.cpp source/components/objects/raw/EBO.h source/components/objects/raw/VBO.cpp source/components/objects/raw/VBO.h source/components/Camera.cpp source/components/Camera.h source/components/objects/Object.cpp source/components/objects/Object.h source/components/objects/RawObject.cpp source/components/objects/RawObject.h source/RenderEngine.cpp source/RenderEngine.h source/components/ShaderManager.cpp source/components/ShaderManager.h source/scenes/LightingScene.cpp source/scenes/LightingScene.h source/components/lighting/sources/LightSource.cpp source/components/lighting/sources/LightSource.h)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${ENGINE_OUTPUT_DIRECTORY})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${ENGINE_OUTPUT_DIRECTORY})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${ENGINE_OUTPUT_DIRECTORY})
 
-#copy assets to build
-file(COPY "source/assets/" DESTINATION "assets/")
+# Source
+link_libraries(
+    glfw3dll # Version: 3.3.5
+    assimp # Version: 5.1.3
+    glad # Version: 0.1.34
+)
 
-#add include directories
-target_include_directories(${PROJECT_NAME} PUBLIC external/include)
+add_subdirectory(source)
 
-#include GLFW, VERSION: 3.3.5
-target_link_libraries(${PROJECT_NAME} glfw3dll)
-file(COPY "external/lib/glfw3.dll" DESTINATION "/")
+# Tests
+if (ENGINE_BUILD_TESTS)
+    include_directories(PUBLIC .)
 
-#include assimp, VERSION: 5.1.3
-target_link_libraries(${PROJECT_NAME} assimp)
-file(COPY "external/lib/libassimp-5.dll" DESTINATION "/")
+    link_libraries(OpenGLProject)
 
-#include GLAD, VERSION: 0.1.34
-target_link_libraries(${PROJECT_NAME} glad)
+    add_subdirectory(tests)
+endif()
