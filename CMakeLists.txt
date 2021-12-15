@@ -10,7 +10,6 @@ include_directories(
     external/include
 )
 
-file(COPY "source/assets/" DESTINATION "bin/assets/")
 file(COPY "external/lib/" DESTINATION "bin/")
 
 # Project Settings
@@ -38,6 +37,8 @@ if (ENGINE_BUILD_TESTS)
     include_directories(PUBLIC .)
 
     link_libraries(OpenGLProject)
+
+    file(COPY "tests/assets/" DESTINATION "bin/assets/")
 
     add_subdirectory(tests)
 endif()
