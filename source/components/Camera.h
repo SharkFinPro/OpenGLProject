@@ -9,6 +9,7 @@ class Camera {
 private:
     glm::vec3 position{};
     glm::vec3 direction = glm::vec3(0.0f, 0.0f, -1.0f);
+    glm::vec3 pDirection = glm::vec3(0.0f);
 
     float speed = 5.0f;
 

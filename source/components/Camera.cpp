@@ -41,15 +41,13 @@ void Camera::processInput(const std::shared_ptr<Window>& window)
     direction.y = static_cast<float>(glm::sin(glm::radians(pitch)));
     direction.z = static_cast<float>(glm::sin(glm::radians(yaw)) * cos(glm::radians(pitch)));
 
+    pDirection.x = -static_cast<float>(glm::sin(glm::radians(yaw)));
+    pDirection.z = static_cast<float>(glm::cos(glm::radians(yaw)));
+
     if (window->keyDown(GLFW_KEY_W))
         position += cameraSpeed * direction;
     if (window->keyDown(GLFW_KEY_S))
         position -= cameraSpeed * direction;
-
-    glm::vec3 pDirection = direction;
-    pDirection.x = -direction.z;
-    pDirection.y = 0;
-    pDirection.z = direction.x;
 
     if (window->keyDown(GLFW_KEY_A))
         position -= cameraSpeed * pDirection;
