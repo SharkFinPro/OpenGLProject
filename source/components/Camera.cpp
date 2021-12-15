@@ -48,7 +48,7 @@ void Camera::processInput(const std::shared_ptr<Window>& window)
 
     glm::vec3 pDirection = direction;
     pDirection.x = -direction.z;
-    pDirection.y = -direction.y;
+    pDirection.y = 0;
     pDirection.z = direction.x;
 
     if (window->keyDown(GLFW_KEY_A))
