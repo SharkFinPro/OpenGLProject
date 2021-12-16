@@ -1,15 +1,15 @@
 #include "LightingScene.h"
-
 #include <source/helpers/FileIO.h>
 
 LightingScene::LightingScene(std::shared_ptr<Engine::RenderEngine> engine)
-        : renderEngine(std::move(engine))
+    : renderEngine(std::move(engine))
 {
     /* Create Window */
     renderEngine->createWindow(800, 600, "3D Rendering Engine", true);
 
     /* Create Camera */
     renderEngine->createCamera(glm::vec3(0.0f, 0.0f, -5.0f));
+    renderEngine->setCameraSpeed(4.0f);
 
     /* Load Shaders */
     renderEngine->loadShader(0, "assets/shaders/specularMap.vert", "assets/shaders/specularMap.frag");
@@ -21,7 +21,7 @@ LightingScene::LightingScene(std::shared_ptr<Engine::RenderEngine> engine)
     renderEngine->setSkyColor(glm::vec3(0.2f));
 
     /* Load Objects */
-    cubeVAO = Engine::helpers::loadModel("assets/objects/cube.obj");
+    auto cubeVAO = Engine::helpers::loadModel("assets/objects/cube.obj");
 
     /* Create Graphics */
     Engine::Transform cubeTransform = {glm::vec3(-1.5f, -1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 1.5f};

@@ -5,7 +5,7 @@
 #include <string>
 
 namespace Engine::helpers {
-    void fileToString(const char *path, std::string &output);
+    std::string fileToString(const char *path);
 
     std::shared_ptr<VAO> loadModel(const char *path);
 }

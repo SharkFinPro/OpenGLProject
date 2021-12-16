@@ -4,7 +4,7 @@
 namespace Engine {
     class EBO {
     private:
-        unsigned int id{}, triangles{};
+        unsigned int id{}, faceCount{};
 
     public:
         EBO();
@@ -13,9 +13,9 @@ namespace Engine {
 
         void bind() const;
 
-        void load(unsigned int indices[], int indicesSize, unsigned int triangles);
+        void loadIndices(unsigned int indices[], int size, unsigned int faces);
 
-        [[nodiscard]] unsigned int getTriangles() const;
+        [[nodiscard]] unsigned int getFaceCount() const;
     };
 }
 

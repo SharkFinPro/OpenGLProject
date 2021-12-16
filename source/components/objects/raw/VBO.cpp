@@ -17,11 +17,11 @@ namespace Engine {
         glBindBuffer(GL_ARRAY_BUFFER, id);
     }
 
-    void VBO::load(float vertices[], int verticesSize, unsigned int verticesCount)
+    void VBO::loadVertices(float *vertices, int size, unsigned int count)
     {
-        this->verticesCount = verticesCount;
+        verticesCount = count;
         bind();
-        glBufferData(GL_ARRAY_BUFFER, verticesSize, vertices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
     }
 
     unsigned int VBO::getVerticesCount() const

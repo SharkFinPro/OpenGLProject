@@ -4,7 +4,6 @@
 #include "EBO.h"
 #include "VBO.h"
 #include <memory>
-#include <vector>
 
 namespace Engine {
     class VAO {

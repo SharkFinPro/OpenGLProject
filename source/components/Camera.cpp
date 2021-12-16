@@ -16,6 +16,11 @@ namespace Engine {
         return position;
     }
 
+    void Camera::setSpeed(float cameraSpeed)
+    {
+        speed = cameraSpeed;
+    }
+
     void Camera::processInput(const std::shared_ptr<Window> &window)
     {
         float cameraSpeed = speed * window->getDeltaTime();

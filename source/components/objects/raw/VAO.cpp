@@ -33,20 +33,20 @@ namespace Engine {
     void VAO::loadVBO(float *vertices, int verticesSize, unsigned int verticesCount)
     {
         bind();
-        vbo->load(vertices, verticesSize, verticesCount);
+        vbo->loadVertices(vertices, verticesSize, verticesCount);
     }
 
     void VAO::loadEBO(unsigned int *indices, int indicesSize, unsigned int triangles)
     {
         bind();
-        ebo->load(indices, indicesSize, triangles);
+        ebo->loadIndices(indices, indicesSize, triangles);
     }
 
     void VAO::draw() const
     {
         bind();
         if (ebo != nullptr)
-            glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(ebo->getTriangles()), GL_UNSIGNED_INT, nullptr);
+            glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(ebo->getFaceCount()), GL_UNSIGNED_INT, nullptr);
         else
             glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(vbo->getVerticesCount()));
     }

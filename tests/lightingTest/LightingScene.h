@@ -7,8 +7,6 @@ class LightingScene {
 private:
     std::shared_ptr<Engine::RenderEngine> renderEngine;
 
-    std::shared_ptr<Engine::VAO> cubeVAO;
-
     std::shared_ptr<Engine::Object> cube;
 
     std::shared_ptr<Engine::LightSource> lightSource;

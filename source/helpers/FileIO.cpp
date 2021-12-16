@@ -2,19 +2,20 @@
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
+#include <vector>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
 namespace Engine::helpers {
-    void fileToString(const char *path, std::string &output)
+    std::string fileToString(const char *path)
     {
         std::ifstream file(path);
         std::stringstream outputStream;
 
         outputStream << file.rdbuf();
 
-        output = outputStream.str();
+        return outputStream.str();
     }
 
     std::shared_ptr<VAO> loadModel(const char *path)

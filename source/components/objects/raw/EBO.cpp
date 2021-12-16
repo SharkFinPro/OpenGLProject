@@ -17,15 +17,15 @@ namespace Engine {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id);
     }
 
-    void EBO::load(unsigned int indices[], int indicesSize, unsigned int triangles)
+    void EBO::loadIndices(unsigned int *indices, int size, unsigned int faces)
     {
-        this->triangles = triangles;
+        faceCount = faces;
         bind();
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesSize, indices, GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW);
     }
 
-    unsigned int EBO::getTriangles() const
+    unsigned int EBO::getFaceCount() const
     {
-        return triangles;
+        return faceCount;
     }
 }

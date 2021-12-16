@@ -101,4 +101,9 @@ namespace Engine {
     {
         skyColor = color;
     }
+
+    void RenderEngine::setCameraSpeed(float speed)
+    {
+        camera->setSpeed(speed);
+    }
 }

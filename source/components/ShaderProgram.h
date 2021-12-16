@@ -9,7 +9,7 @@ namespace Engine {
     private:
         unsigned int programID;
 
-        static unsigned int activeID;
+        static unsigned int activeProgramID;
 
     public:
         ShaderProgram(const char *vertex, const char *fragment);

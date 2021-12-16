@@ -1,8 +1,6 @@
 #ifndef OPENGLPROJECT_VBO_H
 #define OPENGLPROJECT_VBO_H
 
-#include <vector>
-
 namespace Engine {
     class VBO {
     private:
@@ -11,12 +9,11 @@ namespace Engine {
 
     public:
         VBO();
-
         ~VBO();
 
         void bind() const;
 
-        void load(float vertices[], int verticesSize, unsigned int verticesCount = {});
+        void loadVertices(float vertices[], int size, unsigned int count = {});
 
         [[nodiscard]] unsigned int getVerticesCount() const;
     };

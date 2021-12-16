@@ -46,6 +46,8 @@ namespace Engine {
         [[nodiscard]] bool isClosing() const;
 
         void setSkyColor(glm::vec3 color);
+
+        void setCameraSpeed(float speed);
     };
 }
 

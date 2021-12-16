@@ -13,7 +13,6 @@ namespace Engine {
         glm::vec3 pDirection = glm::vec3(0.0f);
 
         float speed = 5.0f;
-
         float pitch = 0.0f;
         float yaw = 90.0f;
 
@@ -23,6 +22,8 @@ namespace Engine {
         [[nodiscard]] glm::mat4 getViewMatrix() const;
 
         [[nodiscard]] glm::vec3 getPosition() const;
+
+        void setSpeed(float cameraSpeed);
 
         void processInput(const std::shared_ptr<Window> &window);
     };
