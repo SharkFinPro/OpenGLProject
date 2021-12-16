@@ -22,6 +22,7 @@ namespace Engine {
 
     public:
         RawObject(std::shared_ptr<VAO> vao, Transform transform, std::shared_ptr<Texture> texture = {});
+        virtual ~RawObject();
 
         virtual void render() const;
 

@@ -6,6 +6,9 @@ namespace Engine {
         : transform(transform), vao(std::move(vao)), texture(std::move(texture))
     {}
 
+    RawObject::~RawObject()
+    = default;
+
     void RawObject::render() const
     {
         glm::mat4 model = glm::mat4(1.0f);
