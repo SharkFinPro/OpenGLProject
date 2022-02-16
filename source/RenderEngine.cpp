@@ -44,7 +44,7 @@ namespace Engine {
         lightSource->load();
         ShaderProgram::setUniform("viewPos", camera->getPosition().x, camera->getPosition().y, camera->getPosition().z);
 
-        glm::mat4 projection = glm::perspective(glm::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
+        glm::mat4 projection = glm::perspective(helpers::radians(45.0f), static_cast<float>(window->getWidth()) / static_cast<float>(window->getHeight()), 0.1f, 100.0f);
         ShaderProgram::setUniform("projection", projection);
         ShaderProgram::setUniform("view", camera->getViewMatrix());
 

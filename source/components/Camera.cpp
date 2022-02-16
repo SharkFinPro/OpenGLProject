@@ -1,6 +1,8 @@
 #include "Camera.h"
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "../helpers/Math.h"
+
 namespace Engine {
     Camera::Camera(glm::vec3 pos)
         : position(pos)
@@ -43,12 +45,12 @@ namespace Engine {
         else if (pitch < -89.0f)
             pitch = -89.0f;
 
-        direction.x = static_cast<float>(glm::cos(glm::radians(yaw)) * cos(glm::radians(pitch)));
-        direction.y = static_cast<float>(glm::sin(glm::radians(pitch)));
-        direction.z = static_cast<float>(glm::sin(glm::radians(yaw)) * cos(glm::radians(pitch)));
+        direction.x = std::cos(helpers::radians(yaw)) * std::cos(helpers::radians(pitch));
+        direction.y = std::sin(helpers::radians(pitch));
+        direction.z = std::sin(helpers::radians(yaw)) * std::cos(helpers::radians(pitch));
 
-        pDirection.x = -static_cast<float>(glm::sin(glm::radians(yaw)));
-        pDirection.z = static_cast<float>(glm::cos(glm::radians(yaw)));
+        pDirection.x = -std::sin(helpers::radians(yaw));
+        pDirection.z = std::cos(helpers::radians(yaw));
 
         if (window->keyDown(GLFW_KEY_W))
             position += cameraSpeed * direction;

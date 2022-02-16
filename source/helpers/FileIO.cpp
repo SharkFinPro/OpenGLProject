@@ -7,7 +7,8 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-namespace Engine::helpers {
+namespace Engine::helpers
+{
     std::string fileToString(const char *path)
     {
         std::ifstream file(path);

@@ -4,7 +4,8 @@
 #include "../components/objects/raw/VAO.h"
 #include <string>
 
-namespace Engine::helpers {
+namespace Engine::helpers
+{
     std::string fileToString(const char *path);
 
     std::shared_ptr<VAO> loadModel(const char *path);
