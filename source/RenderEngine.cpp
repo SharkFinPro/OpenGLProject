@@ -1,5 +1,6 @@
 #include "RenderEngine.h"
 #include <stdexcept>
+#include "helpers/Math.h"
 
 namespace Engine {
     RenderEngine::RenderEngine()
