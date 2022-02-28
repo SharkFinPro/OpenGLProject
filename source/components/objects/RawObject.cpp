@@ -12,8 +12,8 @@ namespace Engine {
     void RawObject::render() const
     {
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, transform.position);
         model = glm::scale(model, glm::vec3(transform.scale));
+        model = glm::translate(model, transform.position);
 
         ShaderProgram::setUniform("model", model);
 

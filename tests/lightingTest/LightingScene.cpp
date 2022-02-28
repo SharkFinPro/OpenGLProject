@@ -5,7 +5,7 @@ LightingScene::LightingScene(std::shared_ptr<Engine::RenderEngine> engine)
     : renderEngine(std::move(engine))
 {
     /* Create Window */
-    renderEngine->createWindow(800, 600, "3D Rendering Engine", true);
+    renderEngine->createWindow(800, 600, "3D Rendering Engine", false);
 
     /* Create Camera */
     renderEngine->createCamera(glm::vec3(0.0f, 0.0f, -5.0f));
